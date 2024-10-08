@@ -22,7 +22,8 @@ extension View {
 
 struct ContentView: View {
     
-    @State var ingredientsText: String = ""
+    @State private var ingredientsText: String = ""
+    @State private var ingredientsList: [String] = []
     
     var body: some View {
         VStack {
@@ -54,7 +55,10 @@ struct ContentView: View {
                                         .padding(.top), alignment: .bottom
                                 )
                             Button {
-                                print("Add")
+                                if !ingredientsText.isEmpty {
+                                    ingredientsList.append(ingredientsText)
+                                    ingredientsText = ""
+                                }
                             } label: {
                                 Text("Add")
                                     .foregroundStyle(Color("WhiteFont"))
@@ -79,6 +83,7 @@ struct ContentView: View {
                         Spacer()
                         Button {
                             print("clear")
+                            ingredientsList.removeAll()
                         } label: {
                             Text("Clear")
                                 .foregroundStyle(Color("WhiteFont"))
@@ -89,27 +94,23 @@ struct ContentView: View {
                         }
 
                     }
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("- Apple")
-                            .foregroundStyle(Color("WhiteFont"))
-                            .font(.custom("Gutheng", size: 24))
-                        Text("- Tomato")
-                            .foregroundStyle(Color("WhiteFont"))
-                            .font(.custom("Gutheng", size: 24))
-                        Text("- Curry")
-                            .foregroundStyle(Color("WhiteFont"))
-                            .font(.custom("Gutheng", size: 24))
-                        Text("- Chicken")
-                            .foregroundStyle(Color("WhiteFont"))
-                            .font(.custom("Gutheng", size: 24))
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 3) {
+                            ForEach(ingredientsList, id: \.self) { ingredient in
+                                Text("- \(ingredient)")
+                                    .foregroundStyle(Color("WhiteFont"))
+                                    .font(.custom("Gutheng", size: 24))
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    
                 }
                 .padding(.horizontal, 20)
             }
             Spacer()
             Button {
                 print("Search for recipes")
+                
             } label: {
                 Text("Search for recipes")
                     .foregroundStyle(Color("WhiteFont"))
