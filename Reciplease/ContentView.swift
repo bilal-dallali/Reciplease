@@ -20,10 +20,12 @@ extension View {
     }
 }
 
-struct ContentView: View {
+struct RecipeSearchView: View {
     
     @State private var ingredientsText: String = ""
     @State private var ingredientsList: [String] = []
+    
+    @State private var redirectRecipeList: Bool = false
     
     var body: some View {
         VStack {
@@ -110,7 +112,12 @@ struct ContentView: View {
             Spacer()
             Button {
                 print("Search for recipes")
-                
+                if !ingredientsList.isEmpty {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        redirectRecipeList = true
+                        print("test45678")
+                    }
+                }
             } label: {
                 Text("Search for recipes")
                     .foregroundStyle(Color("WhiteFont"))
@@ -121,7 +128,9 @@ struct ContentView: View {
                     .cornerRadius(3)
                     .padding(.horizontal, 35)
             }
-
+            .navigationDestination(isPresented: $redirectRecipeList) {
+                RecipeListView()
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 25)
@@ -131,5 +140,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    RecipeSearchView()
 }
