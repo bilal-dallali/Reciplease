@@ -15,9 +15,13 @@ struct RecipeTabView: View {
     var body: some View {
         ZStack {
             if isSearchSelected {
-                RecipeSearchView()
+                NavigationStack {
+                    RecipeSearchView()
+                }
             } else if isFavoriteSelected {
-                FavoriteRecipeView()
+                NavigationStack {
+                    FavoriteRecipeView()
+                }
             }
             VStack(spacing: 0) {
                 Spacer()
@@ -65,7 +69,9 @@ struct RecipeTabView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color("Background"))
             }
+            .ignoresSafeArea(edges: .bottom)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

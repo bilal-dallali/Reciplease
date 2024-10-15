@@ -12,7 +12,7 @@ struct RecipleaseApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                RecipeSearchView()
+                RecipeTabView()
             }
         }
     }
