@@ -11,9 +11,7 @@ import SwiftUI
 struct RecipleaseApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                RecipeTabView()
-            }
+            RecipeTabView()
         }
     }
 }
