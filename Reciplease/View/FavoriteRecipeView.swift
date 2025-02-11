@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct FavoriteRecipeView: View {
+    
+    @FetchRequest(sortDescriptors: []) var recipePersistents: FetchedResults<RecipePersistent>
+    
     var body: some View {
-        Text("Favorite Recipe View")
+        VStack {
+            List(recipePersistents) { recipe in
+                Text(recipe.uri ?? "unknwon")
+            }
+        }
     }
 }
 

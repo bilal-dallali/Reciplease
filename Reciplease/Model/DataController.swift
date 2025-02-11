@@ -11,7 +11,7 @@ import CoreData
 class DataController: ObservableObject {
     let container = NSPersistentContainer(name: "Reciplease")
     
-    init () {
+    init() {
         container.loadPersistentStores { description, error in
             if let error = error {
                 print("Unresolved error \(error.localizedDescription)")
