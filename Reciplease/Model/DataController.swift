@@ -6,7 +6,16 @@
 //
 
 import Foundation
+import CoreData
 
-//class DataCOntroller: ObservableObject {
-//    let container = NSPersistentContainer(name: "RecipeModel")
-//}
+class DataController: ObservableObject {
+    let container = NSPersistentContainer(name: "Reciplease")
+    
+    init () {
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                print("Unresolved error \(error.localizedDescription)")
+            }
+        }
+    }
+}

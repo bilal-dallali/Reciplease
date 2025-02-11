@@ -11,7 +11,6 @@ import Alamofire
 let appId = "2c51822c"
 let appKey = ""
 
-
 func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe], Error>) -> Void) {
     let query = ingredients.joined(separator: ",")
     let baseUrl = "https://api.edamam.com/api/recipes/v2?type=public&q=\(query)&app_id=\(appId)&app_key=\(appKey)"

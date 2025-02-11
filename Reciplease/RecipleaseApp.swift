@@ -10,9 +10,13 @@ import Alamofire
 
 @main
 struct RecipleaseApp: App {
+    
+    //let persistenceController = PersistenceController.shared
+    
     var body: some Scene {
         WindowGroup {
             RecipeTabView()
+                //.environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
