@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteRecipeView: View {
-    
+    @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: []) var recipePersistents: FetchedResults<RecipePersistent>
     
     var body: some View {
