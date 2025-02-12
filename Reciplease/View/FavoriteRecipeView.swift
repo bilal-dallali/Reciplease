@@ -14,7 +14,12 @@ struct FavoriteRecipeView: View {
     var body: some View {
         VStack {
             List(recipePersistents) { recipe in
-                Text(recipe.uri ?? "unknwon")
+                Text(recipe.uri ?? "unknown")
+                Text("\(String(describing: recipe.id))")
+                Text("\(recipe.calories)")
+                Text(recipe.image ?? "unknown")
+                Text(recipe.label ?? "unknown")
+                Text("\(recipe.totalTime)")
             }
         }
     }

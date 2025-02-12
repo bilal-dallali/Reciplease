@@ -6,16 +6,66 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct RecipeDetailsView: View {
     
     let uri: String
     @State private var recipesDetails: RecipeDetails
+    @Environment(\.managedObjectContext) private var viewContext
+    @State private var isFavorite: Bool = false
     
     init(uri: String) {
         self.uri = uri
         // Initialisation avec des valeurs par défaut
         _recipesDetails = State(initialValue: RecipeDetails(label: "Chargement...", image: "", ingredientLines: [], calories: 0.0, totalTime: 0.0, uri: ""))
+    }
+    
+    func addToFavorites() {
+        let recipe = RecipePersistent(context: viewContext)
+        recipe.id = UUID()
+        recipe.label = recipesDetails.label
+        recipe.image = recipesDetails.image
+        //recipe.ingredients = try? JSONEncoder().encode(recipesDetails.ingredientLines) // Stocke en JSON
+        recipe.calories = recipesDetails.calories ?? 0.0
+        recipe.totalTime = recipesDetails.totalTime ?? 0.0
+        recipe.uri = recipesDetails.uri
+        recipe.isFavorite = true
+
+        do {
+            try viewContext.save()
+            print("✅ Recette ajoutée aux favoris !")
+        } catch {
+            print("❌ Erreur lors de l'ajout aux favoris :", error.localizedDescription)
+        }
+    }
+
+    func removeFromFavorites() {
+        let request: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
+        request.predicate = NSPredicate(format: "uri == %@", recipesDetails.uri)
+
+        do {
+            let results = try viewContext.fetch(request)
+            for object in results {
+                viewContext.delete(object)
+            }
+            try viewContext.save()
+            print("✅ Recette supprimée des favoris !")
+        } catch {
+            print("❌ Erreur lors de la suppression :", error.localizedDescription)
+        }
+    }
+    
+    func checkIfFavorite() {
+        let request: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
+        request.predicate = NSPredicate(format: "uri == %@", recipesDetails.uri)
+        
+        do {
+            let results = try viewContext.fetch(request)
+            isFavorite = !results.isEmpty
+        } catch {
+            print("❌ Erreur lors de la vérification des favoris :", error.localizedDescription)
+        }
     }
     
     var body: some View {
@@ -101,13 +151,23 @@ struct RecipeDetailsView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    print("star")
+                    if isFavorite {
+                        isFavorite = false
+                        removeFromFavorites()
+                    } else {
+                        isFavorite = true
+                        addToFavorites()
+                    }
                 } label: {
-                    Image(systemName: "star")
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color("WhiteFont"))
                 }
             }
         }
         .onAppear {
+            checkIfFavorite()
             fetchRecipeByURI(uri: uri) { result in
                 switch result {
                 case .success(let recipe):
