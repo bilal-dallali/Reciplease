@@ -26,7 +26,8 @@ struct RecipeDetailsView: View {
         recipe.id = UUID()
         recipe.label = recipesDetails.label
         recipe.image = recipesDetails.image
-        //recipe.ingredients = try? JSONEncoder().encode(recipesDetails.ingredientLines) // Stocke en JSON
+        //recipe.ingredients = try? JSONEncoder().encode(recipesDetails.ingredientLines)
+        recipe.ingredients = recipesDetails.ingredientLines as NSObject
         recipe.calories = recipesDetails.calories ?? 0.0
         recipe.totalTime = recipesDetails.totalTime ?? 0.0
         recipe.uri = recipesDetails.uri
@@ -173,6 +174,7 @@ struct RecipeDetailsView: View {
                 case .success(let recipe):
                     DispatchQueue.main.async {
                         self.recipesDetails = recipe
+                        self.checkIfFavorite()
                     }
                 case .failure(let error):
                     print("❌ Erreur : \(error.localizedDescription)")

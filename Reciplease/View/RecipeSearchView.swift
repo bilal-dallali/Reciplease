@@ -15,6 +15,8 @@ struct RecipeSearchView: View {
     @State private var redirectRecipeList: Bool = false
     @State private var alertListEmpty: Bool = false
     
+    @State private var recipes: [CommonRecipe] = []
+    
     var body: some View {
         VStack {
             VStack(spacing: 22) {
@@ -113,13 +115,20 @@ struct RecipeSearchView: View {
             Spacer()
             Button {
                 if !ingredientsList.isEmpty {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        redirectRecipeList = true
-                        print("test45678")
+                    fetchRecipes(ingredients: ingredientsList) { result in
+                        switch result {
+                        case .success(let fetchedRecipes):
+                            print("success \(String(describing: fetchRecipes))")
+                            recipes = fetchedRecipes
+                            redirectRecipeList = true
+                        case .failure(let error):
+                            print("Error: \(error.localizedDescription)")
+                        }
                     }
+                    
+                    
                 } else {
                     alertListEmpty = true
-                    print("alert empty")
                 }
             } label: {
                 
@@ -134,7 +143,7 @@ struct RecipeSearchView: View {
             }
             .disabled(ingredientsList.isEmpty)
             .navigationDestination(isPresented: $redirectRecipeList) {
-                RecipeListView(ingredientsList: $ingredientsList)
+                RecipeListView(recipes: recipes)
             }
         }
         .frame(maxWidth: .infinity)

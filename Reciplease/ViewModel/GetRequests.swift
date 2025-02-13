@@ -84,7 +84,9 @@ func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, 
     let baseUrl = "https://api.edamam.com/api/recipes/v2/\(uriComponents)?type=public&app_id=\(appId)&app_key=\(appKey)"
 
     print("🔍 URL requête : \(baseUrl)")
-
+//    AF.request(baseUrl, headers: ["Edamam-Account-User": "Reciplease"])
+//        .validate()
+//        .serializingDecodable(RecipeDetailsResponse.self)
     AF.request(baseUrl, headers: ["Edamam-Account-User": "Reciplease"])
         .validate()
         .responseDecodable(of: RecipeDetailsResponse.self) { response in

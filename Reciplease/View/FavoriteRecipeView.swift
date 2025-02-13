@@ -12,14 +12,28 @@ struct FavoriteRecipeView: View {
     @FetchRequest(sortDescriptors: []) var recipePersistents: FetchedResults<RecipePersistent>
     
     var body: some View {
-        VStack {
-            List(recipePersistents) { recipe in
-                Text(recipe.uri ?? "unknown")
-                Text("\(String(describing: recipe.id))")
-                Text("\(recipe.calories)")
-                Text(recipe.image ?? "unknown")
-                Text(recipe.label ?? "unknown")
-                Text("\(recipe.totalTime)")
+        ScrollView {
+            VStack(spacing: 20) {
+//                List(recipePersistents) { recipe in
+//                    Text(recipe.uri ?? "unknown")
+//                    Text("\(String(describing: recipe.id))")
+//                    Text("\(recipe.calories)")
+//                    Text(recipe.image ?? "unknown")
+//                    Text(recipe.label ?? "unknown")
+//                    Text("\(recipe.totalTime)")
+//                    ForEach(recipe.ingredientsList) { ingredient in
+//                        Text("- \(ingredient)")
+//                    }
+//                }
+                ForEach(recipePersistents, id: \.id) { recipe in
+                    Text(recipe.uri ?? "unknown")
+                    Text("\(String(describing: recipe.id))")
+                    Text("\(recipe.calories)")
+                    Text(recipe.image ?? "unknown")
+                    Text(recipe.label ?? "unknown")
+                    Text("\(recipe.totalTime)")
+                    Text("\(String(describing: recipe.ingredients))")
+                }
             }
         }
     }

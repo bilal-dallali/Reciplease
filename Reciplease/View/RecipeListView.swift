@@ -9,13 +9,12 @@ import SwiftUI
 
 struct RecipeListView: View {
     
-    @State private var recipes: [CommonRecipe] = []
-    @Binding var ingredientsList: [String]
+    let recipes: [CommonRecipe]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(recipes, id: \.label) { recipe in
+                ForEach(recipes, id: \.uri) { recipe in
                     NavigationLink {
                         RecipeDetailsView(uri: recipe.uri)
                     } label: {
@@ -35,22 +34,11 @@ struct RecipeListView: View {
                         .font(.custom("Gutheng", size: 25))
                 }
             }
-            .onAppear {
-                fetchRecipes(ingredients: ingredientsList) { result in
-                    switch result {
-                    case .success(let fetchedRecipes):
-                        print("success \(String(describing: fetchRecipes))")
-                        recipes = fetchedRecipes
-                    case .failure(let error):
-                        print("Error: \(error.localizedDescription)")
-                    }
-                }
-            }
         }
         .background(Color("Background"))
     }
 }
 
 #Preview {
-    RecipeListView(ingredientsList: .constant([]))
+    RecipeListView(recipes: [])
 }
