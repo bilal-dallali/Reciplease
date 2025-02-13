@@ -32,7 +32,13 @@ struct FavoriteRecipeView: View {
                     Text(recipe.image ?? "unknown")
                     Text(recipe.label ?? "unknown")
                     Text("\(recipe.totalTime)")
-                    Text("\(String(describing: recipe.ingredients))")
+                    if let ingredientsArray = recipe.ingredients as? [String] {
+                        ForEach(ingredientsArray, id: \.self) { ingredient in
+                            Text("- \(ingredient)")
+                        }
+                    } else {
+                        Text("Aucun ingrédient disponible.")
+                    }
                 }
             }
         }
