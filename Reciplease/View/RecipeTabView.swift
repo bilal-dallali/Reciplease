@@ -16,13 +16,9 @@ struct RecipeTabView: View {
     var body: some View {
         ZStack {
             if isSearchSelected {
-                NavigationStack {
-                    RecipeSearchView()
-                }
+                RecipeSearchView()
             } else if isFavoriteSelected {
-                NavigationStack {
-                    FavoriteRecipeView()
-                }
+                FavoriteRecipeView()
             }
             VStack(spacing: 0) {
                 Spacer()

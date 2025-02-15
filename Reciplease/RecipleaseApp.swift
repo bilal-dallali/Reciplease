@@ -15,8 +15,10 @@ struct RecipleaseApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RecipeTabView()
-                .environment(\.managedObjectContext, dataController.container.viewContext)
+            NavigationStack {
+                RecipeTabView()
+            }
+            .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }
