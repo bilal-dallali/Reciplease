@@ -13,38 +13,113 @@ struct FavoriteRecipeView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-//                List(recipePersistents) { recipe in
-//                    Text(recipe.uri ?? "unknown")
-//                    Text("\(String(describing: recipe.id))")
-//                    Text("\(recipe.calories)")
-//                    Text(recipe.image ?? "unknown")
-//                    Text(recipe.label ?? "unknown")
-//                    Text("\(recipe.totalTime)")
-//                    ForEach(recipe.ingredientsList) { ingredient in
-//                        Text("- \(ingredient)")
-//                    }
-//                }
-                ForEach(recipePersistents, id: \.id) { recipe in
-                    Text(recipe.uri ?? "unknown")
-                    Text("\(String(describing: recipe.id))")
-                    Text("\(recipe.calories)")
-                    Text(recipe.image ?? "unknown")
-                    Text(recipe.label ?? "unknown")
-                    Text("\(recipe.totalTime)")
-                    if let ingredientsArray = recipe.ingredients as? [String] {
-                        ForEach(ingredientsArray, id: \.self) { ingredient in
-                            Text("- \(ingredient)")
+            VStack(spacing: 10) {
+                Text("Reciplease")
+                    .foregroundStyle(Color("WhiteFont"))
+                    .font(.custom("Gutheng", size: 25))
+                VStack(spacing: 0) {
+                    ForEach(recipePersistents, id: \.id) { recipe in
+                        Button {
+                            //
+                        } label: {
+                            GeometryReader { geometry in
+                                ZStack(alignment: .bottomLeading) {
+                                    AsyncImage(url: URL(string: recipe.image ?? "")) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                    } placeholder: {
+                                        Image("recipe-image")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                    }
+                                    .frame(height: geometry.size.height)
+                                    .clipped()
+                                    VStack(alignment: .trailing) {
+                                        VStack {
+                                            HStack(spacing: 5) {
+                                                Text("\(Int(recipe.calories))")
+                                                    .foregroundStyle(Color("WhiteFont"))
+                                                    .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                                Image(systemName: "fork.knife.circle.fill")
+                                                    .resizable()
+                                                    .frame(width: 14, height: 14)
+                                                    .foregroundStyle(Color("WhiteFont"))
+                                            }
+                                            HStack(spacing: 5) {
+                                                Text("\(Int(recipe.totalTime))m")
+                                                    .foregroundStyle(Color("WhiteFont"))
+                                                    .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                                Image(systemName: "stopwatch")
+                                                    .resizable()
+                                                    .frame(width: 14, height: 14)
+                                                    .foregroundStyle(Color("WhiteFont"))
+                                            }
+                                        }
+                                        .frame(width: 70, height: 51)
+                                        .background(Color("Background"))
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 3)
+                                                .strokeBorder(Color("WhiteFont"), lineWidth: 1)
+                                        }
+                                        .padding(.top, 10)
+                                        .padding(.trailing, 15)
+                                        Spacer()
+                                        LinearGradient(gradient: Gradient(colors: [
+                                            Color(red: 0, green: 0, blue: 0, opacity: 1),
+                                            Color(red: 0.4, green: 0.4, blue: 0.4, opacity: 0)
+                                        ]), startPoint: .bottom, endPoint: .top)
+                                        .frame(height: 60)
+                                        .overlay(alignment: .leading) {
+                                            VStack(alignment: .leading, spacing: 0) {
+                                                Text(recipe.label ?? "unknown")
+                                                    .foregroundStyle(Color("WhiteFont"))
+                                                    .font(.custom("PlusJakartaSans-Semibold", size: 24))
+                                                if let ingredientsArray = recipe.ingredients as? [String] {
+                                                    Text(ingredientsArray.joined(separator: ", "))
+                                                        .foregroundStyle(Color("WhiteFont"))
+                                                        .font(.custom("PlusJakartaSans-Regular", size: 18))
+                                                        .multilineTextAlignment(.leading)
+                                                        .lineLimit(1)
+                                                } else {
+                                                    Text("Aucun ingrédient disponible.")
+                                                }
+                                            }
+                                            .padding(.leading, 12)
+                                            .padding(.bottom, 9)
+                                        }
+                                    }
+                                }
+                            }
+                            .frame(height: 133)
                         }
-                    } else {
-                        Text("Aucun ingrédient disponible.")
                     }
                 }
             }
+            .frame(maxWidth: .infinity)
         }
+        .scrollIndicators(.hidden)
+        .background(Color("Background"))
     }
 }
 
 #Preview {
     FavoriteRecipeView()
 }
+
+//                ForEach(recipePersistents, id: \.id) { recipe in
+//                    Text(recipe.uri ?? "unknown")
+//                    Text("\(String(describing: recipe.id))")
+//                    Text("\(recipe.calories)")
+//                    Text(recipe.image ?? "unknown")
+//                    Text(recipe.label ?? "unknown")
+//                    Text("\(recipe.totalTime)")
+//                    if let ingredientsArray = recipe.ingredients as? [String] {
+//                        ForEach(ingredientsArray, id: \.self) { ingredient in
+//                            Text("- \(ingredient)")
+//                        }
+//                    } else {
+//                        Text("Aucun ingrédient disponible.")
+//                    }
+//                }

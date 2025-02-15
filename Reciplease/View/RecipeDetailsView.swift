@@ -72,7 +72,6 @@ struct RecipeDetailsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                
                 AsyncImage(url: URL(string: recipesDetails.image ?? "")) { image in
                     image
                         .resizable()
@@ -108,7 +107,7 @@ struct RecipeDetailsView: View {
                                         .foregroundStyle(Color("WhiteFont"))
                                 }
                             }
-                            .frame(width: 58, height: 51)
+                            .frame(width: 70, height: 51)
                             .background(Color("Background"))
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                             .overlay {
@@ -163,7 +162,7 @@ struct RecipeDetailsView: View {
                     Image(systemName: isFavorite ? "star.fill" : "star")
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .foregroundStyle(Color("WhiteFont"))
+                        .foregroundStyle(Color("GreenFavorite"))
                 }
             }
         }

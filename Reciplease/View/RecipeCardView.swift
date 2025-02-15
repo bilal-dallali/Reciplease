@@ -46,7 +46,7 @@ struct RecipeCardView: View {
                                 .foregroundStyle(Color("WhiteFont"))
                         }
                     }
-                    .frame(width: 58, height: 51)
+                    .frame(width: 70, height: 51)
                     .background(Color("Background"))
                     .clipShape(RoundedRectangle(cornerRadius: 3))
                     .overlay {
