@@ -21,9 +21,16 @@ struct RecipePersistentDetailsView: View {
     
     private func toggleFavorite() {
         isFavorite.toggle()
-        recipe.isFavorite = isFavorite
+        
+        if isFavorite {
+            recipe.isFavorite = true
+        } else {
+            // ❌ Supprime la recette des favoris
+            viewContext.delete(recipe)
+        }
+        
         do {
-            try viewContext.save()
+            try viewContext.save() // ✅ Sauvegarde Core Data
         } catch {
             print("❌ Erreur lors de la sauvegarde : \(error.localizedDescription)")
         }
