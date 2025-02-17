@@ -129,7 +129,6 @@ struct RecipeSearchView: View {
                     alertListEmpty = true
                 }
             } label: {
-                
                 Text("Search for recipes")
                     .foregroundStyle(Color("WhiteFont"))
                     .font(.custom("PlusJakartaSans-Semibold", size: 23))

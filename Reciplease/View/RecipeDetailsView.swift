@@ -140,15 +140,42 @@ struct RecipeDetailsView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            Link(destination: URL(string: "https://www.youtube.com")!) {
-                Text("Get directions")
-                    .foregroundStyle(Color("WhiteFont"))
+            if !recipesDetails.url.isEmpty, let url = URL(string: recipesDetails.url) {
+                Link(destination: url) {
+                    Text("Get directions")
+                        .foregroundStyle(Color("WhiteFont"))
+                        .font(.custom("PlusJakartaSans-Semibold", size: 23))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 64)
+                        .background(Color("GreenButton"))
+                        .cornerRadius(3)
+                        .padding(.horizontal, 35)
+                        .padding(.bottom, 25)
+                }
+            } else {
+                Text("Aucune direction disponible")
+                    .foregroundStyle(Color.gray)
+                    .font(.custom("PlusJakartaSans-Semibold", size: 18))
                     .frame(maxWidth: .infinity)
                     .frame(height: 64)
-                    .background(Color("GreenButton"))
+                    .background(Color.gray.opacity(0.5))
+                    .cornerRadius(3)
+                    .padding(.horizontal, 35)
+                    .padding(.bottom, 25)
             }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 0)
+//            Link(destination: URL(string: "\(recipesDetails.url)")!) {
+//                Text("Get directions")
+//                    .foregroundStyle(Color("WhiteFont"))
+//                    .font(.custom("PlusJakartaSans-Semibold", size: 23))
+//                    .frame(maxWidth: .infinity)
+//                    .frame(height: 64)
+//                    .background(Color("GreenButton"))
+//                    .cornerRadius(3)
+//                    .padding(.horizontal, 35)
+//                    .padding(.bottom, 25)
+//            }
+//            Text("\(recipesDetails.url)")
+//                .padding(.bottom, 90)
         }
         .navigationBarBackButtonHidden(true)
         .background(Color("Background"))
