@@ -16,16 +16,18 @@ struct RecipeHit: Codable {
 }
 
 struct Recipe: Codable, CommonRecipe {
+    
     let label: String
     let image: String?
     let ingredientLines: [String]
     let totalTime: Double?
     let uri: String
     let calories: Double?
+    let url: String
     
     // Permet d'extraire les bonnes valeurs JSON
     enum CodingKeys: String, CodingKey {
-        case label, image, ingredientLines, totalTime, uri, calories
+        case label, image, ingredientLines, totalTime, uri, calories, url
     }
 }
 
@@ -36,6 +38,7 @@ struct RecipeDetails: Codable {
     let calories: Double?
     let totalTime: Double?
     let uri: String
+    let url: String
 }
 
 protocol CommonRecipe {
@@ -45,6 +48,7 @@ protocol CommonRecipe {
     var totalTime: Double? { get }
     var uri: String { get }
     var calories: Double? { get }
+    var url: String { get }
 }
 
 struct RecipeDetailsResponse: Codable {

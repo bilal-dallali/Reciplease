@@ -48,7 +48,8 @@ func fetchRecipeByLabel(label: String, completion: @escaping (Result<RecipeDetai
                         ingredientLines: matchedRecipe.ingredientLines,
                         calories: matchedRecipe.calories ?? 0.0,
                         totalTime: matchedRecipe.totalTime ?? 0.0,
-                        uri: matchedRecipe.uri
+                        uri: matchedRecipe.uri,
+                        url: matchedRecipe.url
                     )
                     
                     completion(.success(recipeDetails))
@@ -63,7 +64,8 @@ func fetchRecipeByLabel(label: String, completion: @escaping (Result<RecipeDetai
                         ingredientLines: [],
                         calories: 0.0,
                         totalTime: 0.0,
-                        uri: ""
+                        uri: "",
+                        url: ""
                     )
                     
                     completion(.success(emptyRecipe))
@@ -100,3 +102,23 @@ func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, 
             }
         }
 }
+
+//func fetchRecipeInstructions(uri: String, completion: @escaping (Result<String, Error>) -> Void) {
+//    let baseUrl = "https://api.edamam.com/api/recipes/v2/\(uri)?type=public&app_id=\(appId)&app_key=\(appKey)"
+//    
+//    AF.request(baseUrl, headers: ["Edamam-Account-User": "Reciplease"])
+//        .validate()
+//        .responseDecodable(of: RecipeResponse.self) { response in
+//            switch response.result {
+//            case .success(let recipeResponse):
+//                if let instructions = recipeResponse.recipe.instructions?.joined(separator: "\n") {
+//                    completion(.success(instructions))
+//                } else {
+//                    completion(.success("Aucune instruction disponible pour cette recette."))
+//                }
+//            case .failure(let error):
+//                print("❌ Erreur lors de la récupération des instructions :", error.localizedDescription)
+//                completion(.failure(error))
+//            }
+//        }
+//}

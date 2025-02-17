@@ -81,5 +81,5 @@ struct RecipeCardView: View {
 }
 
 #Preview {
-    RecipeCardView(recipe: Recipe(label: "", image: "", ingredientLines: [], totalTime: 0.8, uri: "", calories: 0.8))
+    RecipeCardView(recipe: Recipe(label: "", image: "", ingredientLines: [], totalTime: 0.8, uri: "", calories: 0.8, url: ""))
 }

@@ -18,7 +18,7 @@ struct RecipeDetailsView: View {
     init(uri: String) {
         self.uri = uri
         // Initialisation avec des valeurs par défaut
-        _recipesDetails = State(initialValue: RecipeDetails(label: "Chargement...", image: "", ingredientLines: [], calories: 0.0, totalTime: 0.0, uri: ""))
+        _recipesDetails = State(initialValue: RecipeDetails(label: "Chargement...", image: "", ingredientLines: [], calories: 0.0, totalTime: 0.0, uri: "", url: ""))
     }
     
     func addToFavorites() {
@@ -70,73 +70,85 @@ struct RecipeDetailsView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                AsyncImage(url: URL(string: recipesDetails.image ?? "")) { image in
-                    image
-                        .resizable()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 250)
-                } placeholder: {
-                    Image("recipe-image")
-                        .resizable()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 250)
-                }
-                .overlay {
-                    VStack {
-                        HStack {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    AsyncImage(url: URL(string: recipesDetails.image ?? "")) { image in
+                        image
+                            .resizable()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 250)
+                    } placeholder: {
+                        Image("recipe-image")
+                            .resizable()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 250)
+                    }
+                    .overlay {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                VStack {
+                                    HStack(spacing: 5) {
+                                        Text("\(Int(recipesDetails.calories ?? 0))")
+                                            .foregroundStyle(Color("WhiteFont"))
+                                            .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                        Image(systemName: "fork.knife.circle.fill")
+                                            .resizable()
+                                            .frame(width: 14, height: 14)
+                                            .foregroundStyle(Color("WhiteFont"))
+                                    }
+                                    HStack(spacing: 5) {
+                                        Text("\(Int(recipesDetails.totalTime ?? 0))m")
+                                            .foregroundStyle(Color("WhiteFont"))
+                                            .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                        Image(systemName: "stopwatch")
+                                            .resizable()
+                                            .frame(width: 14, height: 14)
+                                            .foregroundStyle(Color("WhiteFont"))
+                                    }
+                                }
+                                .frame(width: 70, height: 51)
+                                .background(Color("Background"))
+                                .clipShape(RoundedRectangle(cornerRadius: 3))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 3)
+                                        .strokeBorder(Color("WhiteFont"), lineWidth: 1)
+                                }
+                                .padding(.top, 10)
+                                .padding(.trailing, 15)
+                            }
                             Spacer()
-                            VStack {
-                                HStack(spacing: 5) {
-                                    Text("\(Int(recipesDetails.calories ?? 0))")
-                                        .foregroundStyle(Color("WhiteFont"))
-                                        .font(.custom("PlusJakartaSans-Semibold", size: 15))
-                                    Image(systemName: "fork.knife.circle.fill")
-                                        .resizable()
-                                        .frame(width: 14, height: 14)
-                                        .foregroundStyle(Color("WhiteFont"))
-                                }
-                                HStack(spacing: 5) {
-                                    Text("\(Int(recipesDetails.totalTime ?? 0))m")
-                                        .foregroundStyle(Color("WhiteFont"))
-                                        .font(.custom("PlusJakartaSans-Semibold", size: 15))
-                                    Image(systemName: "stopwatch")
-                                        .resizable()
-                                        .frame(width: 14, height: 14)
-                                        .foregroundStyle(Color("WhiteFont"))
-                                }
-                            }
-                            .frame(width: 70, height: 51)
-                            .background(Color("Background"))
-                            .clipShape(RoundedRectangle(cornerRadius: 3))
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .strokeBorder(Color("WhiteFont"), lineWidth: 1)
-                            }
-                            .padding(.top, 10)
-                            .padding(.trailing, 15)
-                        }
-                        Spacer()
-                        Text(recipesDetails.label)
-                            .foregroundStyle(Color("WhiteFont"))
-                            .font(.custom("PlusJakartaSans-SemiBold", size: 28))
-                    }
-                }
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Ingredients")
-                        .foregroundStyle(Color("WhiteFont"))
-                        .font(.custom("Gutheng", size: 32))
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(recipesDetails.ingredientLines, id: \.self) { ingredient in
-                            Text("- \(ingredient)")
+                            Text(recipesDetails.label)
                                 .foregroundStyle(Color("WhiteFont"))
-                                .font(.custom("Gutheng", size: 16))
+                                .font(.custom("PlusJakartaSans-SemiBold", size: 28))
                         }
                     }
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Ingredients")
+                            .foregroundStyle(Color("WhiteFont"))
+                            .font(.custom("Gutheng", size: 32))
+                        VStack(alignment: .leading, spacing: 0) {
+                            ForEach(recipesDetails.ingredientLines, id: \.self) { ingredient in
+                                Text("- \(ingredient)")
+                                    .foregroundStyle(Color("WhiteFont"))
+                                    .font(.custom("Gutheng", size: 16))
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 15)
                 }
-                .padding(.horizontal, 15)
             }
+            .scrollIndicators(.hidden)
+            Link(destination: URL(string: "https://www.youtube.com")!) {
+                Text("Get directions")
+                    .foregroundStyle(Color("WhiteFont"))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 64)
+                    .background(Color("GreenButton"))
+            }
+            .padding(.horizontal, 32)
+            .padding(.bottom, 0)
         }
         .navigationBarBackButtonHidden(true)
         .background(Color("Background"))
