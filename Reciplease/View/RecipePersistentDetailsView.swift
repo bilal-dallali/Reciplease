@@ -114,7 +114,7 @@ struct RecipePersistentDetailsView: View {
             }
             .scrollIndicators(.hidden)
             
-            if let url = URL(string: recipe.url) {
+            if let urlString = recipe.url, !urlString.isEmpty, let url = URL(string: urlString) {
                 Link(destination: url) {
                     Text("Get directions")
                         .foregroundStyle(Color("WhiteFont"))

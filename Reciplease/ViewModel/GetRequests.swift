@@ -102,23 +102,3 @@ func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, 
             }
         }
 }
-
-//func fetchRecipeInstructions(uri: String, completion: @escaping (Result<String, Error>) -> Void) {
-//    let baseUrl = "https://api.edamam.com/api/recipes/v2/\(uri)?type=public&app_id=\(appId)&app_key=\(appKey)"
-//    
-//    AF.request(baseUrl, headers: ["Edamam-Account-User": "Reciplease"])
-//        .validate()
-//        .responseDecodable(of: RecipeResponse.self) { response in
-//            switch response.result {
-//            case .success(let recipeResponse):
-//                if let instructions = recipeResponse.recipe.instructions?.joined(separator: "\n") {
-//                    completion(.success(instructions))
-//                } else {
-//                    completion(.success("Aucune instruction disponible pour cette recette."))
-//                }
-//            case .failure(let error):
-//                print("❌ Erreur lors de la récupération des instructions :", error.localizedDescription)
-//                completion(.failure(error))
-//            }
-//        }
-//}
