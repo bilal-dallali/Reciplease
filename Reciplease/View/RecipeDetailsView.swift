@@ -32,6 +32,7 @@ struct RecipeDetailsView: View {
         recipe.totalTime = recipesDetails.totalTime ?? 0.0
         recipe.uri = recipesDetails.uri
         recipe.isFavorite = true
+        recipe.url = recipesDetails.url
 
         do {
             try viewContext.save()
