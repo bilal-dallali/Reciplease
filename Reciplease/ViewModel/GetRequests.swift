@@ -29,54 +29,54 @@ func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe],
         }
 }
 
-func fetchRecipeByLabel(label: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
-    let baseUrl = "https://api.edamam.com/api/recipes/v2?type=public&q=\(label)&app_id=\(appId)&app_key=\(appKey)"
-    
-    print("🔍 URL requête : \(baseUrl)")
-    
-    AF.request(baseUrl, headers: ["Edamam-Account-User": "Reciplease"])
-        .validate()
-        .responseDecodable(of: RecipeResponse.self) { response in
-            switch response.result {
-            case .success(let recipeResponse):
-                if let matchedRecipe = recipeResponse.hits.first(where: { $0.recipe.label.lowercased() == label.lowercased() })?.recipe {
-                    
-                    // Crée un objet `RecipeDetails` avec les bonnes données
-                    let recipeDetails = RecipeDetails(
-                        label: matchedRecipe.label,
-                        image: matchedRecipe.image ?? "",
-                        ingredientLines: matchedRecipe.ingredientLines,
-                        calories: matchedRecipe.calories ?? 0.0,
-                        totalTime: matchedRecipe.totalTime ?? 0.0,
-                        uri: matchedRecipe.uri,
-                        url: matchedRecipe.url
-                    )
-                    
-                    completion(.success(recipeDetails))
-                
-                } else {
-                    print("⚠️ Aucune recette trouvée avec ce label.")
-                    
-                    // Retourne une recette vide si aucune trouvée
-                    let emptyRecipe = RecipeDetails(
-                        label: "Recette non trouvée",
-                        image: "",
-                        ingredientLines: [],
-                        calories: 0.0,
-                        totalTime: 0.0,
-                        uri: "",
-                        url: ""
-                    )
-                    
-                    completion(.success(emptyRecipe))
-                }
-
-            case .failure(let error):
-                print("❌ Erreur lors de la récupération de la recette :", error.localizedDescription)
-                completion(.failure(error))
-            }
-        }
-}
+//func fetchRecipeByLabel(label: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
+//    let baseUrl = "https://api.edamam.com/api/recipes/v2?type=public&q=\(label)&app_id=\(appId)&app_key=\(appKey)"
+//    
+//    print("🔍 URL requête : \(baseUrl)")
+//    
+//    AF.request(baseUrl, headers: ["Edamam-Account-User": "Reciplease"])
+//        .validate()
+//        .responseDecodable(of: RecipeResponse.self) { response in
+//            switch response.result {
+//            case .success(let recipeResponse):
+//                if let matchedRecipe = recipeResponse.hits.first(where: { $0.recipe.label.lowercased() == label.lowercased() })?.recipe {
+//                    
+//                    // Crée un objet `RecipeDetails` avec les bonnes données
+//                    let recipeDetails = RecipeDetails(
+//                        label: matchedRecipe.label,
+//                        image: matchedRecipe.image ?? "",
+//                        ingredientLines: matchedRecipe.ingredientLines,
+//                        calories: matchedRecipe.calories ?? 0.0,
+//                        totalTime: matchedRecipe.totalTime ?? 0.0,
+//                        uri: matchedRecipe.uri,
+//                        url: matchedRecipe.url
+//                    )
+//                    
+//                    completion(.success(recipeDetails))
+//                
+//                } else {
+//                    print("⚠️ Aucune recette trouvée avec ce label.")
+//                    
+//                    // Retourne une recette vide si aucune trouvée
+//                    let emptyRecipe = RecipeDetails(
+//                        label: "Recette non trouvée",
+//                        image: "",
+//                        ingredientLines: [],
+//                        calories: 0.0,
+//                        totalTime: 0.0,
+//                        uri: "",
+//                        url: ""
+//                    )
+//                    
+//                    completion(.success(emptyRecipe))
+//                }
+//
+//            case .failure(let error):
+//                print("❌ Erreur lors de la récupération de la recette :", error.localizedDescription)
+//                completion(.failure(error))
+//            }
+//        }
+//}
 
 func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
     // ✅ Extraction correcte de l'ID de la recette

@@ -61,6 +61,41 @@ final class RecipleaseTests: XCTestCase {
     }
     
     
+    func testFetchRecipeByURI_Success() {
+        let testRecipeID = "304399cfec7404bb253e8ea039b36544" // ✅ Assure-toi que cet ID est valide
+        let testURL = URL(string: "https://api.edamam.com/api/recipes/v2/\(testRecipeID)?type=public&app_id=\(appId)&app_key=\(appKey)")!
+
+        let mockJSON = """
+        {
+            "recipe": {
+                "label": "Pizza Margherita",
+                "image": "https://image.url",
+                "ingredientLines": ["Tomate", "Mozzarella", "Basilic"],
+                "calories": 800,
+                "totalTime": 30,
+                "uri": "recipe_\(testRecipeID)",
+                "url": "https://example.com"
+            }
+        }
+        """.data(using: .utf8)
+        
+        URLProtocolMock.testResponse = (mockJSON, HTTPURLResponse(url: testURL, statusCode: 200, httpVersion: nil, headerFields: nil), nil)
+        
+        let expectation = self.expectation(description: "Fetching Recipe by URI")
+        
+        fetchRecipeByURI(uri: testRecipeID) { result in
+            switch result {
+            case .success(let recipe):
+                XCTAssertEqual(recipe.label, "Salade Indochinoise")
+                XCTAssertEqual(recipe.calories, 390.12750000014796)
+            case .failure(let error):
+                XCTFail("Erreur inattendue : \(error.localizedDescription)")
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }
 
 class URLProtocolMock: URLProtocol {
