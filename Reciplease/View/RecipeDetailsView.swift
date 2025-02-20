@@ -7,6 +7,19 @@
 
 import SwiftUI
 import CoreData
+import SafariServices
+
+struct SafariWebView: UIViewControllerRepresentable {
+    let url: URL
+    
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        return SFSafariViewController(url: url)
+    }
+    
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
+        
+    }
+}
 
 struct RecipeDetailsView: View {
     
@@ -142,17 +155,32 @@ struct RecipeDetailsView: View {
             }
             .scrollIndicators(.hidden)
             if !recipesDetails.url.isEmpty, let url = URL(string: recipesDetails.url) {
-                Link(destination: url) {
+//                Link(destination: url) {
+//                    Text("Get directions")
+//                        .foregroundStyle(Color("WhiteFont"))
+//                        .font(.custom("PlusJakartaSans-Semibold", size: 23))
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: 64)
+//                        .background(Color("GreenButton"))
+//                        .cornerRadius(3)
+//                        .padding(.horizontal, 35)
+//                        .padding(.bottom, 25)
+//                }
+                NavigationLink {
+                    SafariWebView(url: url)
+                        .ignoresSafeArea()
+                } label: {
                     Text("Get directions")
                         .foregroundStyle(Color("WhiteFont"))
                         .font(.custom("PlusJakartaSans-Semibold", size: 23))
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color("GreenButton"))
-                        .cornerRadius(3)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
                         .padding(.horizontal, 35)
                         .padding(.bottom, 25)
                 }
+
             } else {
                 Text("Aucune direction disponible")
                     .foregroundStyle(Color.gray)
@@ -164,19 +192,6 @@ struct RecipeDetailsView: View {
                     .padding(.horizontal, 35)
                     .padding(.bottom, 25)
             }
-//            Link(destination: URL(string: "\(recipesDetails.url)")!) {
-//                Text("Get directions")
-//                    .foregroundStyle(Color("WhiteFont"))
-//                    .font(.custom("PlusJakartaSans-Semibold", size: 23))
-//                    .frame(maxWidth: .infinity)
-//                    .frame(height: 64)
-//                    .background(Color("GreenButton"))
-//                    .cornerRadius(3)
-//                    .padding(.horizontal, 35)
-//                    .padding(.bottom, 25)
-//            }
-//            Text("\(recipesDetails.url)")
-//                .padding(.bottom, 90)
         }
         .navigationBarBackButtonHidden(true)
         .background(Color("Background"))

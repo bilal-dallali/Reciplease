@@ -62,7 +62,7 @@ final class RecipleaseTests: XCTestCase {
     
     
     func testFetchRecipeByURI_Success() {
-        let testRecipeID = "304399cfec7404bb253e8ea039b36544" // ✅ Assure-toi que cet ID est valide
+        let testRecipeID = "304399cfec7404bb253e8ea039b36544"
         let testURL = URL(string: "https://api.edamam.com/api/recipes/v2/\(testRecipeID)?type=public&app_id=\(appId)&app_key=\(appKey)")!
 
         let mockJSON = """
