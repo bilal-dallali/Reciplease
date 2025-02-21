@@ -13,6 +13,7 @@ struct RecipePersistentDetailsView: View {
     let recipe: RecipePersistent
     @State private var isFavorite: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
+    @State private var showNavigator: Bool = false
     
     init(recipe: RecipePersistent) {
         self.recipe = recipe
@@ -114,29 +115,20 @@ struct RecipePersistentDetailsView: View {
             }
             .scrollIndicators(.hidden)
             
-            if let urlString = recipe.url, !urlString.isEmpty, let url = URL(string: urlString) {
-                Link(destination: url) {
-                    Text("Get directions")
-                        .foregroundStyle(Color("WhiteFont"))
-                        .font(.custom("PlusJakartaSans-Semibold", size: 23))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 64)
-                        .background(Color("GreenButton"))
-                        .cornerRadius(3)
-                        .padding(.horizontal, 35)
-                        .padding(.bottom, 25)
-                }
-            } else {
-                Text("Aucune direction disponible")
-                    .foregroundStyle(Color.gray)
-                    .font(.custom("PlusJakartaSans-Semibold", size: 18))
+            Button {
+                showNavigator = true
+            } label: {
+                Text("Get directions")
+                    .foregroundStyle(Color("WhiteFont"))
+                    .font(.custom("PlusJakartaSans-Semibold", size: 23))
                     .frame(maxWidth: .infinity)
                     .frame(height: 64)
-                    .background(Color.gray.opacity(0.5))
-                    .cornerRadius(3)
+                    .background(Color("GreenButton"))
+                    .clipShape(RoundedRectangle(cornerRadius: 3))
                     .padding(.horizontal, 35)
                     .padding(.bottom, 25)
             }
+
         }
         .navigationBarBackButtonHidden(true)
         .background(Color("Background"))
@@ -159,6 +151,9 @@ struct RecipePersistentDetailsView: View {
                         .foregroundStyle(Color("GreenFavorite"))
                 }
             }
+        }
+        .sheet(isPresented: $showNavigator) {
+            SafariWebView(url: URL(string: recipe.url!)!)
         }
     }
 }

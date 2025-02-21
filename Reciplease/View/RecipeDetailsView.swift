@@ -27,6 +27,7 @@ struct RecipeDetailsView: View {
     @State private var recipesDetails: RecipeDetails
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isFavorite: Bool = false
+    @State private var showNavigator: Bool = false
     
     init(uri: String) {
         self.uri = uri
@@ -154,21 +155,9 @@ struct RecipeDetailsView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            if !recipesDetails.url.isEmpty, let url = URL(string: recipesDetails.url) {
-//                Link(destination: url) {
-//                    Text("Get directions")
-//                        .foregroundStyle(Color("WhiteFont"))
-//                        .font(.custom("PlusJakartaSans-Semibold", size: 23))
-//                        .frame(maxWidth: .infinity)
-//                        .frame(height: 64)
-//                        .background(Color("GreenButton"))
-//                        .cornerRadius(3)
-//                        .padding(.horizontal, 35)
-//                        .padding(.bottom, 25)
-//                }
-                NavigationLink {
-                    SafariWebView(url: url)
-                        .ignoresSafeArea()
+            if !recipesDetails.url.isEmpty {
+                Button {
+                    showNavigator = true
                 } label: {
                     Text("Get directions")
                         .foregroundStyle(Color("WhiteFont"))
@@ -180,7 +169,6 @@ struct RecipeDetailsView: View {
                         .padding(.horizontal, 35)
                         .padding(.bottom, 25)
                 }
-
             } else {
                 Text("Aucune direction disponible")
                     .foregroundStyle(Color.gray)
@@ -234,6 +222,9 @@ struct RecipeDetailsView: View {
                     print("❌ Erreur : \(error.localizedDescription)")
                 }
             }
+        }
+        .sheet(isPresented: $showNavigator) {
+            SafariWebView(url: URL(string: recipesDetails.url)!)
         }
     }
 }
