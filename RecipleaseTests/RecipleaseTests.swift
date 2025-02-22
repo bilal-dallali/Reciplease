@@ -96,6 +96,27 @@ final class RecipleaseTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
     }
+    
+    func testFetchRecipes_Failure() {
+        let mockError = NSError(domain: "com.reciplease", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+
+        // Simuler un échec réseau en renvoyant une erreur
+        URLProtocolMock.testResponse = (nil, nil, mockError)
+
+        let expectation = self.expectation(description: "Fetching Recipes Failure")
+
+        fetchRecipes(ingredients: ["Salade"]) { result in
+            switch result {
+            case .success:
+                XCTFail("L'appel API ne devrait pas réussir")
+            case .failure(let error):
+                XCTAssertEqual(error.localizedDescription, "Network error", "L'erreur n'a pas la bonne description")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }
 
 class URLProtocolMock: URLProtocol {
