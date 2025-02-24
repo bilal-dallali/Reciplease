@@ -123,4 +123,27 @@ final class CoreDataTests: XCTestCase {
         }
     }
     
+    func testUpdateRecipeFavoriteStatus() {
+        let recipe = RecipePersistent(context: managedContext)
+        recipe.id = UUID()
+        recipe.label = "Test Recipe"
+        recipe.uri = "test_uri"
+        recipe.isFavorite = true
+
+        try? managedContext.save()
+
+        // Récupérer et modifier
+        let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri")
+
+        if let fetchedRecipe = try? managedContext.fetch(fetchRequest).first {
+            fetchedRecipe.isFavorite = false
+            try? managedContext.save()
+        }
+
+        // Vérifier la modification
+        let updatedRecipe = try? managedContext.fetch(fetchRequest).first
+        XCTAssertFalse(updatedRecipe?.isFavorite ?? true, "Le statut favori n'a pas été mis à jour")
+    }
+    
 }

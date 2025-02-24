@@ -70,11 +70,6 @@
 			path = RecipleaseTests;
 			sourceTree = "<group>";
 		};
-		9A79F67E2CA5D6890015AF4B /* RecipleaseUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RecipleaseUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +103,6 @@
 			children = (
 				9A79F6632CA5D6870015AF4B /* Reciplease */,
 				9A79F6742CA5D6890015AF4B /* RecipleaseTests */,
-				9A79F67E2CA5D6890015AF4B /* RecipleaseUITests */,
 				9A79F6622CA5D6870015AF4B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -185,9 +179,6 @@
 			);
 			dependencies = (
 				9A79F67D2CA5D6890015AF4B /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				9A79F67E2CA5D6890015AF4B /* RecipleaseUITests */,
 			);
 			name = RecipleaseUITests;
 			packageProductDependencies = (
