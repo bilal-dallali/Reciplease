@@ -14,6 +14,7 @@ struct RecipePersistentDetailsView: View {
     @State private var isFavorite: Bool = false
     @Environment(\.managedObjectContext) private var viewContext
     @State private var showNavigator: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     
     init(recipe: RecipePersistent) {
         self.recipe = recipe
@@ -28,6 +29,7 @@ struct RecipePersistentDetailsView: View {
         } else {
             // ❌ Supprime la recette des favoris
             viewContext.delete(recipe)
+            presentationMode.wrappedValue.dismiss()
         }
         
         do {
