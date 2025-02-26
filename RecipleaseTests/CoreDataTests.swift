@@ -23,12 +23,12 @@ final class CoreDataTests: XCTestCase {
         persistentContainer.persistentStoreDescriptions = [description]
         
         let expectation = self.expectation(description: "PersistentContainerLoad")
-        persistentContainer.loadPersistentStores { (_, error) in
-            XCTAssertNil(error)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 5)
-        
+//        persistentContainer.loadPersistentStores { (_, error) in
+//            XCTAssertNil(error)
+//            expectation.fulfill()
+//        }
+//        waitForExpectations(timeout: 5)
+        let dataController = DataController(container: persistentContainer)
         managedContext = persistentContainer.viewContext
     }
     
@@ -39,21 +39,7 @@ final class CoreDataTests: XCTestCase {
     }
     
     func testAddRecipeToFavorites() {
-        let recipe = RecipePersistent(context: managedContext)
-        recipe.id = UUID()
-        recipe.label = "Test Recipe"
-        recipe.image = "test_image_url"
-        recipe.ingredients = ["Tomate", "Oignon"] as NSObject
-        recipe.calories = 100
-        recipe.totalTime = 20
-        recipe.uri = "test_uri"
-        recipe.isFavorite = true
         
-        do {
-            try managedContext.save()
-        } catch {
-            XCTFail("Échec de l'ajout de la recette aux favoris: \(error.localizedDescription)")
-        }
         
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri")

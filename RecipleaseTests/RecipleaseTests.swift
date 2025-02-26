@@ -23,22 +23,22 @@ final class RecipleaseTests: XCTestCase {
     
     func testFetchRecipes_Success() {
         let mockJSON = """
-            {
-                "hits": [
-                    {
-                        "recipe": {
-                            "label": "Salade César",
-                            "image": "https://image.url",
-                            "ingredientLines": ["Laitue", "Poulet", "Croutons"],
-                            "calories": 250,
-                            "totalTime": 15,
-                            "uri": "recipe_123",
-                            "url": "https://example.com"
-                        }
+        {
+            "hits": [
+                {
+                    "recipe": {
+                        "label": "Salade César",
+                        "image": "https://image.url",
+                        "ingredientLines": ["Laitue", "Poulet", "Croutons"],
+                        "calories": 250,
+                        "totalTime": 15,
+                        "uri": "recipe_123",
+                        "url": "https://example.com"
                     }
-                ]
-            }
-            """.data(using: .utf8)
+                }
+            ]
+        }
+        """.data(using: .utf8)
         
         URLProtocolMock.testResponse = (mockJSON, HTTPURLResponse(url: URL(string: "https://api.edamam.com")!,
                                                                   statusCode: 200, httpVersion: nil, headerFields: nil), nil)
@@ -97,29 +97,25 @@ final class RecipleaseTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-//    func testFetchRecipes_Failure() {
-//        // Simule une erreur réseau avec un message d'erreur
-//        let mockError = NSError(domain: "com.reciplease", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
-//
-//        // Simuler une réponse avec une erreur
-//        URLProtocolMock.testResponse = (nil, nil, mockError) // Pas de données, juste une erreur
-//
-//        let expectation = self.expectation(description: "Fetching Recipes Failure")
-//
-//        // Appelez la méthode fetchRecipes
-//        fetchRecipes(ingredients: ["Salade"]) { result in
-//            switch result {
-//            case .success:
-//                XCTFail("L'appel API ne devrait pas réussir") // Si la requête réussit, échoue le test
-//            case .failure(let error):
-//                // Vérifie que l'erreur correspond à l'erreur simulée
-//                XCTAssertEqual(error.localizedDescription, "Network error", "L'erreur ne correspond pas")
-//            }
-//            expectation.fulfill()
-//        }
-//
-//        waitForExpectations(timeout: 5, handler: nil)
-//    }
+    func testFetchRecipeByURI_Failure() {
+        let mockError = NSError(domain: "com.reciplease", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+
+        URLProtocolMock.testResponse = (nil, nil, mockError)
+
+        let expectation = self.expectation(description: "Fetching Recipe by URI Failure")
+
+        fetchRecipeByURI(uri: "recipe_unknown") { result in
+            switch result {
+            case .success:
+                XCTFail("L'appel API ne devrait pas réussir")
+            case .failure(let error):
+                XCTAssertEqual(error.localizedDescription, "Response status code was unacceptable: 404.", "L'erreur ne correspond pas")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }
 
 class URLProtocolMock: URLProtocol {
