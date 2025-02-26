@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 class DataController: ObservableObject {
-    private let container: NSPersistentContainer
+    let container: NSPersistentContainer
     private let managedContext: NSManagedObjectContext
     
     init(container: NSPersistentContainer = NSPersistentContainer(name: "Reciplease")) {

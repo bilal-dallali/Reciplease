@@ -13,6 +13,7 @@ final class CoreDataTests: XCTestCase {
     
     var persistentContainer: NSPersistentContainer!
     var managedContext: NSManagedObjectContext!
+    var dataController: DataController!
     
     override func setUp() {
         super.setUp()
@@ -38,18 +39,89 @@ final class CoreDataTests: XCTestCase {
         super.tearDown()
     }
     
-    func testAddRecipeToFavorites() {
-        
-        
+//    func testAddRecipeToFavorites() {
+//        
+//        
+//        let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri")
+//        
+//        do {
+//            let results = try managedContext.fetch(fetchRequest)
+//            XCTAssertEqual(results.count, 1, "La recette n'a pas été ajoutée correctement")
+//            XCTAssertEqual(results.first?.label, "Test Recipe", "Le nom de la recette ne correspond pas")
+//        } catch {
+//            XCTFail("Erreur lors de la récupération de la recette: \(error.localizedDescription)")
+//        }
+//    }
+    
+//    func testAddToFavorites() {
+//        // Utilisation de la méthode addToFavorites avec les valeurs statiques déjà présentes dans la fonction
+//        dataController.addToFavorites(Recipe(
+//            label: "Test Recipe",
+//            image: "test_image_url",
+//            ingredientLines: ["Tomato", "Onion"],
+//            totalTime: 20,
+//            uri: "test_uri",
+//            calories: 100,
+//            url: "https://example.com"
+//        ))
+//
+//        // Vérification que la recette a bien été ajoutée dans Core Data avec l'URI statique
+//        let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri") // Vérification avec l'URI statique
+//        
+//        do {
+//            let results = try managedContext.fetch(fetchRequest)
+//            
+//            // Vérifier que la recette a bien été ajoutée
+//            XCTAssertEqual(results.count, 1, "La recette n'a pas été ajoutée aux favoris")
+//            
+//            let savedRecipe = results.first!
+//            
+//            // Vérifier les attributs de la recette sauvegardée
+//            XCTAssertEqual(savedRecipe.label, "Test Recipe", "Le label de la recette n'est pas correct")
+//            XCTAssertEqual(savedRecipe.uri, "test_uri", "L'URI de la recette n'est pas correct")
+//            XCTAssertEqual(savedRecipe.isFavorite, true, "La recette n'est pas marquée comme favorite")
+//            
+//        } catch {
+//            XCTFail("Erreur lors de la récupération de la recette : \(error.localizedDescription)")
+//        }
+//    }
+    
+    func testAddToFavorites() {
+        // Utilisation de la méthode addToFavorites avec les valeurs statiques déjà présentes dans la fonction
+        dataController.addToFavorites(Recipe(
+            label: "Test Recipe",
+            image: "test_image_url",
+            ingredientLines: ["Tomato", "Onion"],
+            totalTime: 20,
+            uri: "test_uri",
+            calories: 100,
+            url: "https://example.com"
+        ))
+
+        // Vérification que la recette a bien été ajoutée dans Core Data avec l'URI statique
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri")
+        fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri") // Vérification avec l'URI statique
         
         do {
             let results = try managedContext.fetch(fetchRequest)
-            XCTAssertEqual(results.count, 1, "La recette n'a pas été ajoutée correctement")
-            XCTAssertEqual(results.first?.label, "Test Recipe", "Le nom de la recette ne correspond pas")
+            
+            // Vérifier que la recette a bien été ajoutée
+            XCTAssertEqual(results.count, 1, "La recette n'a pas été ajoutée aux favoris")
+            
+            guard let savedRecipe = results.first else {
+                XCTFail("Aucune recette trouvée")
+                return
+            }
+            
+            // Vérifier les attributs de la recette sauvegardée
+            XCTAssertEqual(savedRecipe.label, "Test Recipe", "Le label de la recette n'est pas correct")
+            XCTAssertEqual(savedRecipe.uri, "test_uri", "L'URI de la recette n'est pas correct")
+            XCTAssertEqual(savedRecipe.isFavorite, true, "La recette n'est pas marquée comme favorite")
+            
         } catch {
-            XCTFail("Erreur lors de la récupération de la recette: \(error.localizedDescription)")
+            XCTFail("Erreur lors de la récupération de la recette : \(error.localizedDescription)")
         }
     }
     
