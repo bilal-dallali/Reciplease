@@ -168,4 +168,51 @@ final class CoreDataTests: XCTestCase {
         XCTAssertFalse(updatedRecipe?.isFavorite ?? true, "Le statut favori n'a pas été mis à jour")
     }
     
+    func testGetFavorites() {
+        // Vérifier que la liste des favoris est vide au début
+        XCTAssertEqual(dataController.getFavorites().count, 0, "La liste des favoris devrait être vide au départ")
+
+        // Ajouter une recette aux favoris
+        dataController.addToFavorites(Recipe(
+            label: "Test Recipe",
+            image: "test_image_url",
+            ingredientLines: ["Tomato", "Onion"],
+            totalTime: 20,
+            uri: "test_uri",
+            calories: 100,
+            url: "https://example.com"
+        ))
+
+        // Récupérer les favoris après l'ajout
+        let favorites = dataController.getFavorites()
+
+        // Vérifier qu'il y a bien un favori
+        XCTAssertEqual(favorites.count, 1, "Une recette aurait dû être ajoutée aux favoris")
+
+        // Vérifier que les valeurs correspondent
+        XCTAssertEqual(favorites.first?.label, "Test Recipe", "Le label du favori est incorrect")
+        XCTAssertEqual(favorites.first?.uri, "test_uri", "L'URI du favori est incorrect")
+    }
+
+    func testIsFavorite() {
+        let recipe = Recipe(
+            label: "Test Recipe",
+            image: "test_image_url",
+            ingredientLines: ["Tomato", "Onion"],
+            totalTime: 20,
+            uri: "test_uri",
+            calories: 100,
+            url: "https://example.com"
+        )
+
+        // Vérifier que la recette n'est pas favorite au départ
+        XCTAssertFalse(dataController.isFavorite(recipe), "La recette ne devrait pas être favorite au départ")
+
+        // Ajouter la recette aux favoris
+        dataController.addToFavorites(recipe)
+
+        // Vérifier que la recette est maintenant favorite
+        XCTAssertTrue(dataController.isFavorite(recipe), "La recette aurait dû être marquée comme favorite")
+    }
+    
 }
