@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 let appId = "2c51822c"
-let appKey = ""
+let appKey = "7bd59a6ed43b0e0e0cd755c8cad73be3"
 
 func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe], Error>) -> Void) {
     let query = ingredients.joined(separator: ",")
