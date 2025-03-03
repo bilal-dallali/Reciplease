@@ -16,6 +16,7 @@ struct RecipeSearchView: View {
     @State private var alertListEmpty: Bool = false
     
     @State private var recipes: [CommonRecipe] = []
+    var apiGetManager = apiGetRequest()
     
     var body: some View {
         VStack {
@@ -115,10 +116,10 @@ struct RecipeSearchView: View {
             Spacer()
             Button {
                 if !ingredientsList.isEmpty {
-                    fetchRecipes(ingredients: ingredientsList) { result in
+                    apiGetManager.fetchRecipes(ingredients: ingredientsList) { result in
                         switch result {
                         case .success(let fetchedRecipes):
-                            print("success \(String(describing: fetchRecipes))")
+                            print("success \(String(describing: apiGetManager.fetchRecipes))")
                             recipes = fetchedRecipes
                             redirectRecipeList = true
                         case .failure(let error):

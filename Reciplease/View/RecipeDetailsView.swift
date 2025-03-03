@@ -28,6 +28,7 @@ struct RecipeDetailsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isFavorite: Bool = false
     @State private var showNavigator: Bool = false
+    var apiGetManager = apiGetRequest()
     
     init(uri: String) {
         self.uri = uri
@@ -211,7 +212,7 @@ struct RecipeDetailsView: View {
         }
         .onAppear {
             checkIfFavorite()
-            fetchRecipeByURI(uri: uri) { result in
+            apiGetManager.fetchRecipeByURI(uri: uri) { result in
                 switch result {
                 case .success(let recipe):
                     DispatchQueue.main.async {
