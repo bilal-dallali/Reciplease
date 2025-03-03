@@ -27,13 +27,13 @@ struct RecipePersistentDetailsView: View {
         if isFavorite {
             recipe.isFavorite = true
         } else {
-            // ❌ Supprime la recette des favoris
+            // Delete the recipe from favorites
             viewContext.delete(recipe)
             presentationMode.wrappedValue.dismiss()
         }
         
         do {
-            try viewContext.save() // ✅ Sauvegarde Core Data
+            try viewContext.save()
         } catch {
             print("❌ Erreur lors de la sauvegarde : \(error.localizedDescription)")
         }
@@ -49,10 +49,9 @@ struct RecipePersistentDetailsView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 250)
                     } placeholder: {
-                        Rectangle()
-                            .foregroundStyle(Color("GreyFont"))
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 250)
+                        Image("recipe-image")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
                     }
                     .overlay {
                         VStack {

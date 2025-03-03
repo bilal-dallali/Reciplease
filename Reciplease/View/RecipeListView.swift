@@ -14,11 +14,19 @@ struct RecipeListView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(recipes, id: \.uri) { recipe in
-                    NavigationLink {
-                        RecipeDetailsView(uri: recipe.uri)
-                    } label: {
-                        RecipeCardView(recipe: recipe)
+                if recipes.isEmpty {
+                    Text("No recipes found with those ingredients! Click on back, clear the list and add real ingredients!")
+                        .foregroundStyle(Color("WhiteFont"))
+                        .font(.custom("PlusJakartaSans-Bold", size: 24))
+                        .padding(.horizontal, 24)
+                        .padding(.top, 24)
+                } else {
+                    ForEach(recipes, id: \.uri) { recipe in
+                        NavigationLink {
+                            RecipeDetailsView(uri: recipe.uri)
+                        } label: {
+                            RecipeCardView(recipe: recipe)
+                        }
                     }
                 }
             }

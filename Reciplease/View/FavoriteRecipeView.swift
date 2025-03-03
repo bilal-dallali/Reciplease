@@ -36,9 +36,9 @@ struct FavoriteRecipeView: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                         } placeholder: {
-                                            Rectangle()
-                                                .foregroundStyle(Color("GreyFont"))
-                                                .frame(maxWidth: .infinity)
+                                            Image("recipe-image")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
                                         }
                                         .frame(height: geometry.size.height)
                                         .clipped()
