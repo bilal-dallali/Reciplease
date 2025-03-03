@@ -8,28 +8,39 @@
 import Foundation
 @testable import Reciplease
 
-final class MockApiRequest: ApiGetRequestProtocol {
-    func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Reciplease.Recipe], any Error>) -> Void) {
-        
-    }
-    
-    func fetchRecipeByURI(uri: String, completion: @escaping (Result<Reciplease.RecipeDetails, any Error>) -> Void) {
-        
-    }
-    
-    
-}
+class MockNetworkService: NetworkServiceProtocol {
+    var shouldReturnError = false
 
-class MockApiGetRequest: ApiGetRequestProtocol {
-    var mockResult: Result<[Recipe], Error>?
-
-    func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe], Error>) -> Void) {
-        if let result = mockResult {
-            completion(result)
+    func request<T: Decodable>(_ url: String, completion: @escaping (Result<T, Error>) -> Void) {
+        if shouldReturnError {
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Mock Error"])))
+            return
         }
-    }
 
-    func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
-        // Implémentation non nécessaire pour ce test
+        if url.contains("recipes/v2?") {
+            let mockResponse = RecipeResponse(hits: [RecipeHit(recipe: Recipe(
+                label: "Mock Recipe",
+                image: "https://example.com/image.jpg",
+                ingredientLines: ["Salt", "Pepper"],
+                totalTime: 30,
+                uri: "mock_uri",
+                calories: 200,
+                url: "https://example.com/recipe"
+            ))])
+            
+            completion(.success(mockResponse as! T)) // Force cast for generic
+        } else {
+            let mockDetailsResponse = RecipeDetailsResponse(recipe: RecipeDetails(
+                label: "Mock Recipe Details",
+                image: "https://example.com/detail.jpg",
+                ingredientLines: ["Flour", "Sugar"],
+                calories: 500,
+                totalTime: 45,
+                uri: "mock_uri_details",
+                url: "https://example.com/recipe_details"
+            ))
+            
+            completion(.success(mockDetailsResponse as! T))
+        }
     }
 }

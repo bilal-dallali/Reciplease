@@ -28,7 +28,7 @@ struct RecipeDetailsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isFavorite: Bool = false
     @State private var showNavigator: Bool = false
-    var apiGetManager = apiGetRequest()
+    var apiGetManager = ApiGetRequest()
     
     init(uri: String) {
         self.uri = uri

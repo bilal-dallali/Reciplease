@@ -16,7 +16,7 @@ struct RecipeSearchView: View {
     @State private var alertListEmpty: Bool = false
     
     @State private var recipes: [CommonRecipe] = []
-    var apiGetManager = apiGetRequest()
+    var apiGetManager = ApiGetRequest()
     
     var body: some View {
         VStack {
