@@ -19,3 +19,17 @@ final class MockApiRequest: ApiGetRequestProtocol {
     
     
 }
+
+class MockApiGetRequest: ApiGetRequestProtocol {
+    var mockResult: Result<[Recipe], Error>?
+
+    func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe], Error>) -> Void) {
+        if let result = mockResult {
+            completion(result)
+        }
+    }
+
+    func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
+        // Implémentation non nécessaire pour ce test
+    }
+}
