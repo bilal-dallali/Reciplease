@@ -29,6 +29,8 @@ struct RecipeSearchView: View {
                         Text("What’s in your fridge ?")
                             .foregroundStyle(Color("DarkFont"))
                             .font(.custom("PlusJakartaSans-Medium", size: 24))
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.5)
                         HStack(spacing: 10) {
                             VStack(spacing: 3) {
                                 TextField(text: $ingredientsText) {
@@ -68,6 +70,7 @@ struct RecipeSearchView: View {
                                     .frame(width: 75, height: 40)
                                     .background(Color("GreenButton"))
                                     .cornerRadius(3)
+                                    .minimumScaleFactor(0.5)
                             }
                         }
                         .padding(.horizontal, 24)
@@ -83,6 +86,8 @@ struct RecipeSearchView: View {
                         Text("Your ingredients :")
                             .foregroundStyle(Color("WhiteFont"))
                             .font(.custom("Gutheng", size: 24))
+                            .minimumScaleFactor(0.4)
+                            .lineLimit(1)
                         Spacer()
                         Button {
                             print("clear")
@@ -94,6 +99,7 @@ struct RecipeSearchView: View {
                                 .frame(width: 75, height: 40)
                                 .background(Color("GreyFont"))
                                 .cornerRadius(3)
+                                .minimumScaleFactor(0.5)
                         }
                     }
                     ScrollView {
@@ -138,6 +144,7 @@ struct RecipeSearchView: View {
                     .background(Color(ingredientsList.isEmpty ? "GreyFont" : "GreenButton"))
                     .cornerRadius(3)
                     .padding(.horizontal, 35)
+                    .minimumScaleFactor(0.5)
             }
             .disabled(ingredientsList.isEmpty)
             .navigationDestination(isPresented: $redirectRecipeList) {
