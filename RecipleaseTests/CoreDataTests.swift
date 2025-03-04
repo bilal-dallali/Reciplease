@@ -20,7 +20,8 @@ final class CoreDataTests: XCTestCase {
         
         persistentContainer = NSPersistentContainer(name: "Reciplease")
         let description = NSPersistentStoreDescription()
-        description.url = URL(fileURLWithPath: "/dev/null") // Simule une base de données en mémoire
+        // Simulate a DB
+        description.url = URL(fileURLWithPath: "/dev/null")
         persistentContainer.persistentStoreDescriptions = [description]
         
         let expectation = self.expectation(description: "PersistentContainerLoad")
@@ -49,10 +50,10 @@ final class CoreDataTests: XCTestCase {
     }
     
     func testAddToFavorites() {
-        // Assurez-vous que `managedContext` est bien initialisé
+        // Chcek if managedcontext is initialised
         XCTAssertNotNil(managedContext, "Le managedContext n'a pas été initialisé correctement")
 
-        // Utilisation de la méthode addToFavorites avec les valeurs statiques déjà présentes dans la fonction
+        // Using the method addToFavorite with static values already in the function
         dataController.addToFavorites(Recipe(
             label: "Test Recipe",
             image: "test_image_url",
@@ -63,23 +64,23 @@ final class CoreDataTests: XCTestCase {
             url: "https://example.com"
         ))
 
-        // Vérification que la recette a bien été ajoutée dans Core Data avec l'URI statique
+        // Check if the recipe has been added to core data with a static uri
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri") // Vérification avec l'URI statique
         
         do {
             let results = try managedContext.fetch(fetchRequest)
             
-            // Vérification qu'on a bien une recette ajoutée
+            // Check if the recipe was addede
             XCTAssertEqual(results.count, 1, "La recette n'a pas été ajoutée aux favoris")
             
-            // Vérification de la présence de la recette avant utilisation
+            // Check if the recipe was there before being used
             guard let savedRecipe = results.first else {
                 XCTFail("Aucune recette trouvée")
                 return
             }
             
-            // Vérification des attributs de la recette sauvegardée
+            // Check the attributes of the saved recipe
             XCTAssertEqual(savedRecipe.label, "Test Recipe", "Le label de la recette n'est pas correct")
             XCTAssertEqual(savedRecipe.uri, "test_uri", "L'URI de la recette n'est pas correct")
             XCTAssertEqual(savedRecipe.isFavorite, true, "La recette n'est pas marquée comme favorite")
@@ -154,7 +155,7 @@ final class CoreDataTests: XCTestCase {
 
         try? managedContext.save()
 
-        // Récupérer et modifier
+        // Get and update
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uri == %@", "test_uri")
 
@@ -163,16 +164,16 @@ final class CoreDataTests: XCTestCase {
             try? managedContext.save()
         }
 
-        // Vérifier la modification
+        // Check the update
         let updatedRecipe = try? managedContext.fetch(fetchRequest).first
         XCTAssertFalse(updatedRecipe?.isFavorite ?? true, "Le statut favori n'a pas été mis à jour")
     }
     
     func testGetFavorites() {
-        // Vérifier que la liste des favoris est vide au début
+        // Check if the favorite list is empty
         XCTAssertEqual(dataController.getFavorites().count, 0, "La liste des favoris devrait être vide au départ")
 
-        // Ajouter une recette aux favoris
+        // Add a recipe to favorite
         dataController.addToFavorites(Recipe(
             label: "Test Recipe",
             image: "test_image_url",
@@ -183,13 +184,13 @@ final class CoreDataTests: XCTestCase {
             url: "https://example.com"
         ))
 
-        // Récupérer les favoris après l'ajout
+        // Get favorite after adding one
         let favorites = dataController.getFavorites()
 
-        // Vérifier qu'il y a bien un favori
+        // Check if there is a favorite
         XCTAssertEqual(favorites.count, 1, "Une recette aurait dû être ajoutée aux favoris")
 
-        // Vérifier que les valeurs correspondent
+        // Check if the values match
         XCTAssertEqual(favorites.first?.label, "Test Recipe", "Le label du favori est incorrect")
         XCTAssertEqual(favorites.first?.uri, "test_uri", "L'URI du favori est incorrect")
     }
@@ -205,13 +206,13 @@ final class CoreDataTests: XCTestCase {
             url: "https://example.com"
         )
 
-        // Vérifier que la recette n'est pas favorite au départ
+        // Check if the recipe isn't favorite at the beginning
         XCTAssertFalse(dataController.isFavorite(recipe), "La recette ne devrait pas être favorite au départ")
 
-        // Ajouter la recette aux favoris
+        // Add the recipe to favorite
         dataController.addToFavorites(recipe)
 
-        // Vérifier que la recette est maintenant favorite
+        // Check if the recipe is now favorite
         XCTAssertTrue(dataController.isFavorite(recipe), "La recette aurait dû être marquée comme favorite")
     }
     

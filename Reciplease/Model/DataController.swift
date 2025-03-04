@@ -35,7 +35,7 @@ class DataController: ObservableObject {
     
     func getFavorites() -> [Recipe] {
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "isFavorite == YES") // Filtrer uniquement les favoris
+        fetchRequest.predicate = NSPredicate(format: "isFavorite == YES")
         
         do {
             let results = try managedContext.fetch(fetchRequest)
@@ -48,7 +48,7 @@ class DataController: ObservableObject {
                     totalTime: recipe.totalTime,
                     uri: recipe.uri ?? "",
                     calories: recipe.calories,
-                    url: "" // Pas stocké dans Core Data
+                    url: ""
                 )
             }
         } catch {
