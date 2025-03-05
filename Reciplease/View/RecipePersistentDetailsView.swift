@@ -104,9 +104,18 @@ struct RecipePersistentDetailsView: View {
                         VStack(alignment: .leading, spacing: 0) {
                             if let ingredientsArray = recipe.ingredients as? [String] {
                                 ForEach(ingredientsArray, id: \.self) { ingredient in
-                                    Text("- \(ingredient)")
-                                        .foregroundStyle(Color("WhiteFont"))
-                                        .font(.custom("Gutheng", size: 16))
+                                    HStack(spacing: 0) {
+                                        Text("- ")
+                                            .foregroundStyle(Color("WhiteFont"))
+                                            .font(.custom("Gutheng", size: 16))
+                                            .minimumScaleFactor(0.4)
+                                            .lineLimit(4)
+                                        Text("\(ingredient)")
+                                            .foregroundStyle(Color("WhiteFont"))
+                                            .font(.custom("Gutheng", size: 16))
+                                            .minimumScaleFactor(0.4)
+                                            .lineLimit(4)
+                                    }
                                 }
                             } else {
                                 Text("Aucun ingrédients")

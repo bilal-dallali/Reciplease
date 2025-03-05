@@ -151,11 +151,18 @@ struct RecipeDetailsView: View {
                             .lineLimit(1)
                         VStack(alignment: .leading, spacing: 0) {
                             ForEach(recipesDetails.ingredientLines, id: \.self) { ingredient in
-                                Text("- \(ingredient)")
-                                    .foregroundStyle(Color("WhiteFont"))
-                                    .font(.custom("Gutheng", size: 16))
-                                    .minimumScaleFactor(0.4)
-                                    .lineLimit(1)
+                                HStack(spacing: 0) {
+                                    Text("- ")
+                                        .foregroundStyle(Color("WhiteFont"))
+                                        .font(.custom("Gutheng", size: 16))
+                                        .minimumScaleFactor(0.4)
+                                        .lineLimit(4)
+                                    Text("\(ingredient)")
+                                        .foregroundStyle(Color("WhiteFont"))
+                                        .font(.custom("Gutheng", size: 16))
+                                        .minimumScaleFactor(0.4)
+                                        .lineLimit(4)
+                                }
                             }
                         }
                     }
@@ -175,7 +182,7 @@ struct RecipeDetailsView: View {
                         .background(Color("GreenButton"))
                         .clipShape(RoundedRectangle(cornerRadius: 3))
                         .padding(.horizontal, 35)
-                        .padding(.bottom, 25)
+                        .padding(.bottom, 75)
                         .minimumScaleFactor(0.5)
                 }
             } else {
@@ -193,6 +200,7 @@ struct RecipeDetailsView: View {
         }
         .navigationBarBackButtonHidden(true)
         .background(Color("Background"))
+        .ignoresSafeArea(edges: .bottom)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 BackButtonView()
@@ -221,7 +229,7 @@ struct RecipeDetailsView: View {
             }
         }
         .onAppear {
-            checkIfFavorite()
+            //checkIfFavorite()
             apiGetManager.fetchRecipeByURI(uri: uri) { result in
                 switch result {
                 case .success(let recipe):

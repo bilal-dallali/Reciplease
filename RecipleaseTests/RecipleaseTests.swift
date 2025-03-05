@@ -14,17 +14,17 @@ import XCTest
 
 class ApiGetRequestTests: XCTestCase {
     var apiService: ApiGetRequest!
-    var mockService: MockNetworkService!
+    //var mockService: MockNetworkService!
 
     override func setUp() {
         super.setUp()
-        mockService = MockNetworkService()
-        apiService = ApiGetRequest(networkService: mockService)
+        //mockService = MockNetworkService()
+        //apiService = ApiGetRequest(networkService: mockService)
     }
 
     override func tearDown() {
         apiService = nil
-        mockService = nil
+        //mockService = nil
         super.tearDown()
     }
     

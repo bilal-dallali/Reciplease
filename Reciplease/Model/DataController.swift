@@ -59,11 +59,13 @@ class DataController: ObservableObject {
 
     func isFavorite(_ recipe: Recipe) -> Bool {
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "uri == %@", recipe.uri) // Rechercher la recette par URI
+        // Search recipe by URI
+        fetchRequest.predicate = NSPredicate(format: "uri == %@", recipe.uri)
         
         do {
             let count = try managedContext.count(for: fetchRequest)
-            return count > 0 // Si count > 0, la recette est favorite
+            // If count > 0 the recipe  is favorite
+            return count > 0
         } catch {
             print("Erreur lors de la vérification du favori : \(error.localizedDescription)")
             return false
