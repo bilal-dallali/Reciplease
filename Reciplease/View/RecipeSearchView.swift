@@ -43,6 +43,7 @@ struct RecipeSearchView: View {
                                 .font(.custom("PlusJakartaSans-Medium", size: 19))
                                 .foregroundStyle(Color("DarkFont"))
                                 .frame(height: 26)
+                                .minimumScaleFactor(0.5)
                                 .focused($focusedTextField)
                                 .onSubmit {
                                     if !ingredientsText.isEmpty {
@@ -110,6 +111,8 @@ struct RecipeSearchView: View {
                                         .foregroundStyle(Color("WhiteFont"))
                                         .font(.custom("Gutheng", size: 24))
                                         .padding(.leading, 13)
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
                                     Spacer()
                                 }
                             }
@@ -144,16 +147,19 @@ struct RecipeSearchView: View {
                     .background(Color(ingredientsList.isEmpty ? "GreyFont" : "GreenButton"))
                     .cornerRadius(3)
                     .padding(.horizontal, 35)
-                    .minimumScaleFactor(0.5)
+                    .minimumScaleFactor(0.3)
             }
             .disabled(ingredientsList.isEmpty)
+            .padding(.bottom, 75)
+            //.ignoresSafeArea(edges: .bottom)
             .navigationDestination(isPresented: $redirectRecipeList) {
                 RecipeListView(recipes: recipes)
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 25)
+        .padding(.top, 25)
         .background(Color("Background"))
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 

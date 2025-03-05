@@ -50,6 +50,7 @@
 		9A79F6AC2CA5ED900015AF4B /* Exceptions for "Reciplease" folder in "Reciplease" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Config.xcconfig,
 				Info.plist,
 			);
 			target = 9A79F6602CA5D6870015AF4B /* Reciplease */;
@@ -195,7 +196,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					9A79F6602CA5D6870015AF4B = {
 						CreatedOnToolsVersion = 16.0;

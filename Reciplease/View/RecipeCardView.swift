@@ -26,11 +26,13 @@ struct RecipeCardView: View {
                 .frame(height: geometry.size.height)
                 .clipped()
                 VStack(alignment: .trailing) {
-                    VStack {
+                    VStack(spacing: 5) {
                         HStack(spacing: 5) {
                             Text("\(Int(recipe.calories ?? 0))")
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                .minimumScaleFactor(0.2)
+                                .lineLimit(1)
                             Image(systemName: "fork.knife.circle.fill")
                                 .resizable()
                                 .frame(width: 14, height: 14)
@@ -40,6 +42,8 @@ struct RecipeCardView: View {
                             Text("\(Int(recipe.totalTime ?? 0))m")
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                .minimumScaleFactor(0.2)
+                                .lineLimit(1)
                             Image(systemName: "stopwatch")
                                 .resizable()
                                 .frame(width: 14, height: 14)
@@ -66,9 +70,13 @@ struct RecipeCardView: View {
                             Text(recipe.label)
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-Semibold", size: 24))
+                                .multilineTextAlignment(.leading)
+                                .minimumScaleFactor(0.5)
                             Text(recipe.ingredientLines.joined(separator: ", "))
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-Regular", size: 18))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
                         }
                         .padding(.leading, 12)
                         .padding(.bottom, 9)
@@ -81,5 +89,5 @@ struct RecipeCardView: View {
 }
 
 #Preview {
-    RecipeCardView(recipe: Recipe(label: "", image: "", ingredientLines: [], totalTime: 0.8, uri: "", calories: 0.8, url: ""))
+    RecipeCardView(recipe: Recipe(label: "LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel", image: "", ingredientLines: ["ingredient1, ingredient2"], totalTime: 0.8, uri: "", calories: 0.8, url: ""))
 }

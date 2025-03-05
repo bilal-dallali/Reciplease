@@ -57,11 +57,12 @@ struct RecipePersistentDetailsView: View {
                         VStack {
                             HStack {
                                 Spacer()
-                                VStack {
+                                VStack(spacing: 0) {
                                     HStack(spacing: 5) {
                                         Text("\(Int(recipe.calories))")
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                            .minimumScaleFactor(0.5)
                                         Image(systemName: "fork.knife.circle.fill")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -71,6 +72,7 @@ struct RecipePersistentDetailsView: View {
                                         Text("\(Int(recipe.totalTime))m")
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                            .minimumScaleFactor(0.5)
                                         Image(systemName: "stopwatch")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -91,12 +93,14 @@ struct RecipePersistentDetailsView: View {
                             Text(recipe.label ?? "No recipe selected")
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-SemiBold", size: 28))
+                                .minimumScaleFactor(0.3)
                         }
                     }
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Ingredients")
                             .foregroundStyle(Color("WhiteFont"))
                             .font(.custom("Gutheng", size: 32))
+                            .minimumScaleFactor(0.5)
                         VStack(alignment: .leading, spacing: 0) {
                             if let ingredientsArray = recipe.ingredients as? [String] {
                                 ForEach(ingredientsArray, id: \.self) { ingredient in
@@ -108,6 +112,7 @@ struct RecipePersistentDetailsView: View {
                                 Text("Aucun ingrédients")
                                     .foregroundStyle(Color("WhiteFont"))
                                     .font(.custom("Gutheng", size: 16))
+                                    .minimumScaleFactor(0.5)
                             }
                         }
                     }
@@ -127,12 +132,14 @@ struct RecipePersistentDetailsView: View {
                     .background(Color("GreenButton"))
                     .clipShape(RoundedRectangle(cornerRadius: 3))
                     .padding(.horizontal, 35)
-                    .padding(.bottom, 25)
+                    .padding(.bottom, 75)
+                    .minimumScaleFactor(0.5)
             }
 
         }
         .navigationBarBackButtonHidden(true)
         .background(Color("Background"))
+        .ignoresSafeArea(edges: .bottom)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 BackButtonView()
@@ -141,6 +148,7 @@ struct RecipePersistentDetailsView: View {
                 Text("Reciplease")
                     .foregroundStyle(Color("WhiteFont"))
                     .font(.custom("Gutheng", size: 25))
+                    .minimumScaleFactor(0.5)
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

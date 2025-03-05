@@ -44,6 +44,7 @@ struct RecipeTabView: View {
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(Color(isSearchSelected ? "WhiteFont" : "BorderFont"))
                             .font(.custom("Gutheng", size: 23))
+                            .minimumScaleFactor(0.5)
                     }
                     Spacer()
                     Divider()
@@ -63,6 +64,7 @@ struct RecipeTabView: View {
                             .frame(maxWidth: .infinity)
                             .foregroundStyle(Color(isFavoriteSelected ? "WhiteFont" : "BorderFont"))
                             .font(.custom("Gutheng", size: 23))
+                            .minimumScaleFactor(0.5)
                     }
                     Spacer()
                 }
@@ -71,6 +73,9 @@ struct RecipeTabView: View {
                 .background(Color("Background"))
             }
             .ignoresSafeArea(edges: .bottom)
+            .onAppear {
+                print("api key \(String(describing: apiKey))")
+            }
         }
         .navigationBarBackButtonHidden(true)
     }

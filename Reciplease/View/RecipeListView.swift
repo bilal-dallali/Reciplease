@@ -20,6 +20,7 @@ struct RecipeListView: View {
                         .font(.custom("PlusJakartaSans-Bold", size: 24))
                         .padding(.horizontal, 24)
                         .padding(.top, 24)
+                        .minimumScaleFactor(0.5)
                 } else {
                     ForEach(recipes, id: \.uri) { recipe in
                         NavigationLink {
@@ -40,6 +41,7 @@ struct RecipeListView: View {
                     Text("Reciplease")
                         .foregroundStyle(Color("WhiteFont"))
                         .font(.custom("Gutheng", size: 25))
+                        .minimumScaleFactor(0.5)
                 }
             }
         }

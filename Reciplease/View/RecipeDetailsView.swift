@@ -104,11 +104,12 @@ struct RecipeDetailsView: View {
                         VStack {
                             HStack {
                                 Spacer()
-                                VStack {
+                                VStack(spacing: 0) {
                                     HStack(spacing: 5) {
                                         Text("\(Int(recipesDetails.calories ?? 0))")
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                            .minimumScaleFactor(0.5)
                                         Image(systemName: "fork.knife.circle.fill")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -118,6 +119,7 @@ struct RecipeDetailsView: View {
                                         Text("\(Int(recipesDetails.totalTime ?? 0))m")
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                            .minimumScaleFactor(0.5)
                                         Image(systemName: "stopwatch")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -138,17 +140,22 @@ struct RecipeDetailsView: View {
                             Text(recipesDetails.label)
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-SemiBold", size: 28))
+                                .minimumScaleFactor(0.5)
                         }
                     }
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Ingredients")
                             .foregroundStyle(Color("WhiteFont"))
                             .font(.custom("Gutheng", size: 32))
+                            .minimumScaleFactor(0.3)
+                            .lineLimit(1)
                         VStack(alignment: .leading, spacing: 0) {
                             ForEach(recipesDetails.ingredientLines, id: \.self) { ingredient in
                                 Text("- \(ingredient)")
                                     .foregroundStyle(Color("WhiteFont"))
                                     .font(.custom("Gutheng", size: 16))
+                                    .minimumScaleFactor(0.4)
+                                    .lineLimit(1)
                             }
                         }
                     }
@@ -169,6 +176,7 @@ struct RecipeDetailsView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 3))
                         .padding(.horizontal, 35)
                         .padding(.bottom, 25)
+                        .minimumScaleFactor(0.5)
                 }
             } else {
                 Text("Aucune direction disponible")
@@ -180,6 +188,7 @@ struct RecipeDetailsView: View {
                     .cornerRadius(3)
                     .padding(.horizontal, 35)
                     .padding(.bottom, 25)
+                    .minimumScaleFactor(0.5)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -192,6 +201,7 @@ struct RecipeDetailsView: View {
                 Text("Reciplease")
                     .foregroundStyle(Color("WhiteFont"))
                     .font(.custom("Gutheng", size: 25))
+                    .minimumScaleFactor(0.5)
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

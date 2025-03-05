@@ -17,12 +17,15 @@ struct FavoriteRecipeView: View {
                 Text("Reciplease")
                     .foregroundStyle(Color("WhiteFont"))
                     .font(.custom("Gutheng", size: 25))
+                    .minimumScaleFactor(0.5)
                 if recipePersistents.isEmpty {
                     Text("You have no favorite recipes yet, add some by clicking on search, then add ingredients to your list, then select your recipe and click on the favorite icon")
                         .foregroundStyle(Color("WhiteFont"))
                         .font(.custom("PlusJakartaSans-Bold", size: 24))
                         .padding(.horizontal, 24)
                         .padding(.top, 24)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(8)
                 } else {
                     VStack(spacing: 0) {
                         ForEach(recipePersistents, id: \.id) { recipe in
@@ -43,11 +46,13 @@ struct FavoriteRecipeView: View {
                                         .frame(height: geometry.size.height)
                                         .clipped()
                                         VStack(alignment: .trailing) {
-                                            VStack {
+                                            VStack(spacing: 5) {
                                                 HStack(spacing: 5) {
                                                     Text("\(Int(recipe.calories))")
                                                         .foregroundStyle(Color("WhiteFont"))
                                                         .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                                        .minimumScaleFactor(0.5)
+                                                        .lineLimit(1)
                                                     Image(systemName: "fork.knife.circle.fill")
                                                         .resizable()
                                                         .frame(width: 14, height: 14)
@@ -57,6 +62,8 @@ struct FavoriteRecipeView: View {
                                                     Text("\(Int(recipe.totalTime))m")
                                                         .foregroundStyle(Color("WhiteFont"))
                                                         .font(.custom("PlusJakartaSans-Semibold", size: 15))
+                                                        .minimumScaleFactor(0.5)
+                                                        .lineLimit(1)
                                                     Image(systemName: "stopwatch")
                                                         .resizable()
                                                         .frame(width: 14, height: 14)
@@ -83,11 +90,13 @@ struct FavoriteRecipeView: View {
                                                     Text(recipe.label ?? "unknown")
                                                         .foregroundStyle(Color("WhiteFont"))
                                                         .font(.custom("PlusJakartaSans-Semibold", size: 24))
+                                                        .minimumScaleFactor(0.5)
                                                     if let ingredientsArray = recipe.ingredients as? [String] {
                                                         Text(ingredientsArray.joined(separator: ", "))
                                                             .foregroundStyle(Color("WhiteFont"))
                                                             .font(.custom("PlusJakartaSans-Regular", size: 18))
                                                             .multilineTextAlignment(.leading)
+                                                            .minimumScaleFactor(0.5)
                                                             .lineLimit(1)
                                                     } else {
                                                         Text("Aucun ingrédient disponible.")
