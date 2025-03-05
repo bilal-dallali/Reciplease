@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E1BDC23B2D4020BF009EBDFF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E1BDC23A2D4020BF009EBDFF /* Alamofire */; };
+		E1F79D802D7843800071E750 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = E1F79D7F2D7843800071E750 /* Mocker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F79D802D7843800071E750 /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +165,7 @@
 			);
 			name = RecipleaseTests;
 			packageProductDependencies = (
+				E1F79D7F2D7843800071E750 /* Mocker */,
 			);
 			productName = RecipleaseTests;
 			productReference = 9A79F6712CA5D6890015AF4B /* RecipleaseTests.xctest */;
@@ -222,6 +225,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E1BDC2392D4020BF009EBDFF /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E1F79D7E2D7843800071E750 /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A79F6622CA5D6870015AF4B /* Products */;
@@ -606,6 +610,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		E1F79D7E2D7843800071E750 /* XCRemoteSwiftPackageReference "Mocker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WeTransfer/Mocker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -613,6 +625,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E1BDC2392D4020BF009EBDFF /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E1F79D7F2D7843800071E750 /* Mocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1F79D7E2D7843800071E750 /* XCRemoteSwiftPackageReference "Mocker" */;
+			productName = Mocker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

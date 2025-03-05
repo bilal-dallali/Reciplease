@@ -7,6 +7,7 @@
 
 import XCTest
 import Alamofire
+import Mocker
 @testable import Reciplease
 
 import XCTest
@@ -29,13 +30,25 @@ class ApiGetRequestTests: XCTestCase {
     
     // Tests fetch recipes success
     func testFetchRecipes_ShouldReturnMockData() {
-        let expectation = self.expectation(description: "Fetch Recipes")
+        let originalURL = URL(string: "https://www.example.com/api/authentication?oauth_timestamp=151817037")!
+            
+        let mock = Mock(url: originalURL, ignoreQuery: true, contentType: .json, statusCode: 200, data: [
+            .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockDataRequest", withExtension: "json")!) // Data containing the JSON response
+        ])
+        mock.register()
         
-        apiService.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
+        let configuration = URLSessionConfiguration.af.default
+        configuration.protocolClasses = [MockingURLProtocol.self]
+        let sessionManager = Alamofire.Session(configuration: configuration)
+        let service = NetworkService(sessionManager: sessionManager)
+        let expectation = self.expectation(description: "Fetch Recipes")
+        let apiServiceTwo = ApiGetRequest(networkService: service)
+        
+        apiServiceTwo.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
             switch result {
             case .success(let recipes):
-                XCTAssertEqual(recipes.count, 1)
-                XCTAssertEqual(recipes.first?.label, "Mock Recipe")
+                XCTAssertEqual(recipes.count, 20)
+                XCTAssertEqual(recipes.first?.label, "Bread Baking: Tomato, Cheese, and Bacon Bread Recipe")
             case .failure:
                 XCTFail("Expected success but got failure")
             }
