@@ -8,7 +8,7 @@
 import Foundation
 
 let appId = "2c51822c"
-let appKey = ""
+let appKey = "azsedrftgyuil"
 let apiKey = ProcessInfo.processInfo.environment["API_KEY"]
 
 protocol ApiGetRequestProtocol {

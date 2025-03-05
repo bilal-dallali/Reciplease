@@ -27,20 +27,21 @@ class NetworkService: NetworkServiceProtocol {
 //        sessionManager.request(...)
     }
     
-    func request<T: Decodable>(_ url: String, completion: @escaping (Result<T, Error>) -> Void) {
-        AF.request(url, headers: ["Edamam-Account-User": "Reciplease"])
-            .validate()
-            .responseDecodable(of: T.self) { response in
-                switch response.result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-    }
+//    func request<T: Decodable>(_ url: String, completion: @escaping (Result<T, Error>) -> Void) {
+//        AF.request(url, headers: ["Edamam-Account-User": "Reciplease"])
+//            .validate()
+//            .responseDecodable(of: T.self) { response in
+//                switch response.result {
+//                case .success(let data):
+//                    completion(.success(data))
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
+//    }
     
-    func requestTwo<T: Decodable>(_ url: String, completion: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Decodable>(_ url: String, completion: @escaping (Result<T, Error>) -> Void) {
+        print("📡 Requête envoyée à : \(url)")
         sessionManager.request(url, headers: ["Edamam-Account-User": "Reciplease"])
             .validate()
             .responseDecodable(of: T.self) { response in
