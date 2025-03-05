@@ -67,21 +67,46 @@ class ApiGetRequestTests: XCTestCase {
     
     // Test fetch recipes return error
     func testFetchRecipes_ShouldReturnError() {
-        mockService.shouldReturnError = true
+        let mockURL = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&q=tomato&app_id=\(appId)&app_key=\(appKey)")!
+
+        let mock = Mock(url: mockURL, ignoreQuery: true, contentType: .json, statusCode: 500, data: [.get : Data()])
+        mock.register()
+
+        let configuration = URLSessionConfiguration.af.default
+        configuration.protocolClasses = [MockingURLProtocol.self]
+        let sessionManager = Alamofire.Session(configuration: configuration)
+        let service = NetworkService(sessionManager: sessionManager)
         let expectation = self.expectation(description: "Fetch Recipes Error")
+        let apiService = ApiGetRequest(networkService: service)
 
         apiService.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
             switch result {
             case .success:
                 XCTFail("Expected failure but got success")
-            case .failure(let error):
-                XCTAssertEqual(error.localizedDescription, "Mock Error")
+            case .failure:
+                XCTAssert(true)
             }
             expectation.fulfill()
         }
 
         waitForExpectations(timeout: 1, handler: nil)
     }
+//    func testFetchRecipes_ShouldReturnError() {
+//        mockService.shouldReturnError = true
+//        let expectation = self.expectation(description: "Fetch Recipes Error")
+//
+//        apiService.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
+//            switch result {
+//            case .success:
+//                XCTFail("Expected failure but got success")
+//            case .failure(let error):
+//                XCTAssertEqual(error.localizedDescription, "Mock Error")
+//            }
+//            expectation.fulfill()
+//        }
+//
+//        waitForExpectations(timeout: 1, handler: nil)
+//    }
     
     // Tests fetch recipe
     func testFetchRecipeByURI_ShouldReturnMockData() {
@@ -116,19 +141,44 @@ class ApiGetRequestTests: XCTestCase {
     
     // Test fetch recipe error
     func testFetchRecipeByURI_ShouldReturnError() {
-        mockService.shouldReturnError = true
+        let mockURL = URL(string: "https://api.edamam.com/api/recipes/v2/recipe_123?type=public&app_id=\(appId)&app_key=\(appKey)")!
+
+        let mock = Mock(url: mockURL, ignoreQuery: true, contentType: .json, statusCode: 500, data: [.get : Data()])
+        mock.register()
+
+        let configuration = URLSessionConfiguration.af.default
+        configuration.protocolClasses = [MockingURLProtocol.self]
+        let sessionManager = Alamofire.Session(configuration: configuration)
+        let service = NetworkService(sessionManager: sessionManager)
         let expectation = self.expectation(description: "Fetch Recipe Details Error")
-        
+        let apiService = ApiGetRequest(networkService: service)
+
         apiService.fetchRecipeByURI(uri: "recipe_123") { result in
             switch result {
             case .success:
                 XCTFail("Expected failure but got success")
-            case .failure(let error):
-                XCTAssertEqual(error.localizedDescription, "Mock Error")
+            case .failure:
+                XCTAssert(true)
             }
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
+//    func testFetchRecipeByURI_ShouldReturnError() {
+//        mockService.shouldReturnError = true
+//        let expectation = self.expectation(description: "Fetch Recipe Details Error")
+//        
+//        apiService.fetchRecipeByURI(uri: "recipe_123") { result in
+//            switch result {
+//            case .success:
+//                XCTFail("Expected failure but got success")
+//            case .failure(let error):
+//                XCTAssertEqual(error.localizedDescription, "Mock Error")
+//            }
+//            expectation.fulfill()
+//        }
+//        
+//        waitForExpectations(timeout: 1, handler: nil)
+//    }
 }
