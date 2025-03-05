@@ -1,0 +1,12 @@
+
+{
+  "recipe": {
+    "label": "Mock Recipe Details",
+    "image": "https://example.com/detail.jpg",
+    "ingredientLines": ["Flour", "Sugar"],
+    "calories": 500,
+    "totalTime": 45,
+    "uri": "mock_uri_details",
+    "url": "https://example.com/recipe_details"
+  }
+}

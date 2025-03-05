@@ -85,9 +85,21 @@ class ApiGetRequestTests: XCTestCase {
     
     // Tests fetch recipe
     func testFetchRecipeByURI_ShouldReturnMockData() {
-        let expectation = self.expectation(description: "Fetch Recipe Details")
+        let mockURL = URL(string: "https://api.edamam.com/api/recipes/v2/mock_uri_details?type=public&app_id=\(appId)&app_key=\(appKey)")!
         
-        apiService.fetchRecipeByURI(uri: "recipe_123") { result in
+        let mock = Mock(url: mockURL, ignoreQuery: true, contentType: .json, statusCode: 200, data: [
+            .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockRecipeDetails", withExtension: "json")!)
+        ])
+        mock.register()
+        
+        let configuration = URLSessionConfiguration.af.default
+        configuration.protocolClasses = [MockingURLProtocol.self]
+        let sessionManager = Alamofire.Session(configuration: configuration)
+        let service = NetworkService(sessionManager: sessionManager)
+        let expectation = self.expectation(description: "Fetch Recipe Details")
+        let apiServiceTwo = ApiGetRequest(networkService: service)
+
+        apiServiceTwo.fetchRecipeByURI(uri: "mock_uri_details") { result in
             switch result {
             case .success(let recipe):
                 XCTAssertEqual(recipe.label, "Mock Recipe Details")
@@ -98,7 +110,7 @@ class ApiGetRequestTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
     
