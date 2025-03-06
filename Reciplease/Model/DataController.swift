@@ -87,6 +87,7 @@ class DataController: ObservableObject {
             try managedContext.save()
         } catch {
             //XCTFail("Échec de l'ajout de la recette aux favoris: \(error.localizedDescription)")
+            print("Échec de l'ajout de la recette aux favoris: \(error.localizedDescription)")
         }
     }
 }

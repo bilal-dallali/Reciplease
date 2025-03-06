@@ -14,17 +14,13 @@ import XCTest
 
 class ApiGetRequestTests: XCTestCase {
     var apiService: ApiGetRequest!
-    //var mockService: MockNetworkService!
 
     override func setUp() {
         super.setUp()
-        //mockService = MockNetworkService()
-        //apiService = ApiGetRequest(networkService: mockService)
     }
 
     override func tearDown() {
         apiService = nil
-        //mockService = nil
         super.tearDown()
     }
     
@@ -42,7 +38,6 @@ class ApiGetRequestTests: XCTestCase {
             .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockDataRequest", withExtension: "json")!) // Data containing the JSON response
         ])
         mock.register()
-        //print("mock \(mock)")
         
         let configuration = URLSessionConfiguration.af.default
         configuration.protocolClasses = [MockingURLProtocol.self]
@@ -91,22 +86,6 @@ class ApiGetRequestTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
-//    func testFetchRecipes_ShouldReturnError() {
-//        mockService.shouldReturnError = true
-//        let expectation = self.expectation(description: "Fetch Recipes Error")
-//
-//        apiService.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
-//            switch result {
-//            case .success:
-//                XCTFail("Expected failure but got success")
-//            case .failure(let error):
-//                XCTAssertEqual(error.localizedDescription, "Mock Error")
-//            }
-//            expectation.fulfill()
-//        }
-//
-//        waitForExpectations(timeout: 1, handler: nil)
-//    }
     
     // Tests fetch recipe
     func testFetchRecipeByURI_ShouldReturnMockData() {
@@ -165,20 +144,5 @@ class ApiGetRequestTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
-//    func testFetchRecipeByURI_ShouldReturnError() {
-//        mockService.shouldReturnError = true
-//        let expectation = self.expectation(description: "Fetch Recipe Details Error")
-//        
-//        apiService.fetchRecipeByURI(uri: "recipe_123") { result in
-//            switch result {
-//            case .success:
-//                XCTFail("Expected failure but got success")
-//            case .failure(let error):
-//                XCTAssertEqual(error.localizedDescription, "Mock Error")
-//            }
-//            expectation.fulfill()
-//        }
-//        
-//        waitForExpectations(timeout: 1, handler: nil)
-//    }
+
 }
