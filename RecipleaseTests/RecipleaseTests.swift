@@ -46,11 +46,11 @@ class ApiGetRequestTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch Recipes")
         let apiServiceTwo = ApiGetRequest(networkService: service)
         
-        apiServiceTwo.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
+        apiServiceTwo.fetchRecipes(ingredients: ["chocolate"]) { result in
             switch result {
             case .success(let recipes):
-                XCTAssertEqual(recipes.count, 1)
-                XCTAssertEqual(recipes.first?.label, "Mock Recipe")
+                XCTAssertEqual(recipes.count, 20)
+                XCTAssertEqual(recipes.first?.label, "Serious Chocolate: Easy Chocolate Pie Crust Recipe")
             case .failure:
                 XCTFail("Expected success but got failure")
             }
@@ -89,7 +89,7 @@ class ApiGetRequestTests: XCTestCase {
     
     // Tests fetch recipe
     func testFetchRecipeByURI_ShouldReturnMockData() {
-        let mockURL = URL(string: "https://api.edamam.com/api/recipes/v2/mock_uri_details?type=public&app_id=\(appId)&app_key=\(appKey)")!
+        let mockURL = URL(string: "https://api.edamam.com/api/recipes/v2/764d6feaf541a194d82d0add2dc877f5?type=public&app_id=\(appId)&app_key=\(appKey)")!
         
         let mock = Mock(url: mockURL, ignoreQuery: true, contentType: .json, statusCode: 200, data: [
             .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockRecipeDetails", withExtension: "json")!)
@@ -102,19 +102,19 @@ class ApiGetRequestTests: XCTestCase {
         let service = NetworkService(sessionManager: sessionManager)
         let expectation = self.expectation(description: "Fetch Recipe Details")
         let apiServiceTwo = ApiGetRequest(networkService: service)
-
-        apiServiceTwo.fetchRecipeByURI(uri: "mock_uri_details") { result in
+        
+        apiServiceTwo.fetchRecipeByURI(uri: "764d6feaf541a194d82d0add2dc877f5") { result in
             switch result {
             case .success(let recipe):
-                XCTAssertEqual(recipe.label, "Mock Recipe Details")
-                XCTAssertEqual(recipe.ingredientLines.count, 2)
-                XCTAssertEqual(recipe.url, "https://example.com/recipe_details")
+                XCTAssertEqual(recipe.label, "Best Chocolate Pudding")
+                XCTAssertEqual(recipe.ingredientLines.count, 6)
+                XCTAssertEqual(recipe.url, "http://smittenkitchen.com/2008/02/best-chocolate-pudding/")
             case .failure:
                 XCTFail("Expected success but got failure")
             }
             expectation.fulfill()
         }
-
+        
         waitForExpectations(timeout: 1, handler: nil)
     }
     
@@ -132,7 +132,7 @@ class ApiGetRequestTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch Recipe Details Error")
         let apiService = ApiGetRequest(networkService: service)
 
-        apiService.fetchRecipeByURI(uri: "recipe_123") { result in
+        apiService.fetchRecipeByURI(uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_764d6feaf541a194d82d0add2dc877f5") { result in
             switch result {
             case .success:
                 XCTFail("Expected failure but got success")

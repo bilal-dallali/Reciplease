@@ -43,7 +43,7 @@ class ApiGetRequest: ObservableObject, ApiGetRequestProtocol {
     func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
         let uriComponents = uri.components(separatedBy: "#recipe_").last ?? uri
         let url = "https://api.edamam.com/api/recipes/v2/\(uriComponents)?type=public&app_id=\(appId)&app_key=\(appKey)"
-
+        print("uri \(uriComponents)")
         print("🔍 URL Request: \(url)")
 
         networkService.request(url) { (result: Result<RecipeDetailsResponse, Error>) in
