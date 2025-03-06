@@ -172,7 +172,6 @@ struct RecipeDetailsView: View {
             .scrollIndicators(.hidden)
             if !recipesDetails.url.isEmpty {
                 Button {
-                    print("recipe details \(recipesDetails.url)")
                     showNavigator = true
                 } label: {
                     Text("Get directions")

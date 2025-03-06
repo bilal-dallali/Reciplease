@@ -26,6 +26,7 @@ struct RecipeSearchView: View {
                         .foregroundStyle(Color("WhiteFont"))
                         .font(.custom("Gutheng", size: 25))
                         .accessibilityLabel("Title of the app Reciplease")
+                        .accessibilityAddTraits(.isHeader)
                     VStack(spacing: 16) {
                         Text("What’s in your fridge ?")
                             .foregroundStyle(Color("DarkFont"))
@@ -54,6 +55,7 @@ struct RecipeSearchView: View {
                                     }
                                 }
                                 .submitLabel(.done)
+                                .accessibilityLabel(Text("Ingredient input field"))
                                 .accessibilityHint(Text("Add your ingredients and submit to add ingredient to your list"))
                                 Divider()
                                     .overlay {
@@ -78,6 +80,7 @@ struct RecipeSearchView: View {
                             }
                             .accessibilityLabel(Text("Add button"))
                             .accessibilityHint(Text("Double tap to add ingredient to your list"))
+                            .accessibilityAddTraits(.isButton)
                         }
                         .padding(.horizontal, 24)
                     }
@@ -110,6 +113,7 @@ struct RecipeSearchView: View {
                         }
                         .accessibilityLabel(Text("Clear all ingredients button"))
                         .accessibilityHint(Text("Double tap to remove all ingredients from your list"))
+                        .accessibilityAddTraits(.isButton)
                     }
                     ScrollView {
                         VStack(alignment: .leading, spacing: 3) {
@@ -121,6 +125,7 @@ struct RecipeSearchView: View {
                                         .padding(.leading, 13)
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(1)
+                                        .dynamicTypeSize(.xSmall ... .accessibility3)
                                         .accessibilityLabel("Your ingredient : \(ingredient)")
                                     Spacer()
                                 }
@@ -163,6 +168,7 @@ struct RecipeSearchView: View {
             .padding(.bottom, 75)
             .accessibilityLabel(Text("Search for recipes"))
             .accessibilityHint(Text("Double tap to see recipes based on your ingredients list"))
+            .accessibilityAddTraits(.isButton)
             //.ignoresSafeArea(edges: .bottom)
             .navigationDestination(isPresented: $redirectRecipeList) {
                 RecipeListView(recipes: recipes)
