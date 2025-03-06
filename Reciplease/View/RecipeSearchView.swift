@@ -169,7 +169,6 @@ struct RecipeSearchView: View {
             .accessibilityLabel(Text("Search for recipes"))
             .accessibilityHint(Text("Double tap to see recipes based on your ingredients list"))
             .accessibilityAddTraits(.isButton)
-            //.ignoresSafeArea(edges: .bottom)
             .navigationDestination(isPresented: $redirectRecipeList) {
                 RecipeListView(recipes: recipes)
             }

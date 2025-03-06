@@ -53,6 +53,7 @@ struct RecipePersistentDetailsView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     }
+                    .accessibilityLabel("Image of the recipe \(recipe.label ?? "Unknown")")
                     .overlay {
                         VStack {
                             HStack {
@@ -63,6 +64,7 @@ struct RecipePersistentDetailsView: View {
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
                                             .minimumScaleFactor(0.5)
+                                            .accessibilityLabel("Calories: \(Int(recipe.calories))")
                                         Image(systemName: "fork.knife.circle.fill")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -73,6 +75,7 @@ struct RecipePersistentDetailsView: View {
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
                                             .minimumScaleFactor(0.5)
+                                            .accessibilityLabel("Total cooking time: \(Int(recipe.totalTime))")
                                         Image(systemName: "stopwatch")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -94,6 +97,8 @@ struct RecipePersistentDetailsView: View {
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-SemiBold", size: 28))
                                 .minimumScaleFactor(0.3)
+                                .dynamicTypeSize(.xSmall ... .accessibility3)
+                                .accessibilityLabel("Recipe title: \(recipe.label ?? "Unknown")")
                         }
                     }
                     VStack(alignment: .leading, spacing: 10) {
@@ -101,6 +106,7 @@ struct RecipePersistentDetailsView: View {
                             .foregroundStyle(Color("WhiteFont"))
                             .font(.custom("Gutheng", size: 32))
                             .minimumScaleFactor(0.5)
+                            .accessibilityLabel("Ingredients list")
                         VStack(alignment: .leading, spacing: 0) {
                             if let ingredientsArray = recipe.ingredients as? [String] {
                                 ForEach(ingredientsArray, id: \.self) { ingredient in
@@ -116,12 +122,15 @@ struct RecipePersistentDetailsView: View {
                                             .minimumScaleFactor(0.4)
                                             .lineLimit(4)
                                     }
+                                    .dynamicTypeSize(.xSmall ... .accessibility3)
+                                    .accessibilityLabel("Ingredient: \(ingredient)")
                                 }
                             } else {
-                                Text("Aucun ingrédients")
+                                Text("No ingredients available")
                                     .foregroundStyle(Color("WhiteFont"))
                                     .font(.custom("Gutheng", size: 16))
                                     .minimumScaleFactor(0.5)
+                                    .accessibilityLabel(Text("No ingredients"))
                             }
                         }
                     }
@@ -144,6 +153,9 @@ struct RecipePersistentDetailsView: View {
                     .padding(.bottom, 75)
                     .minimumScaleFactor(0.5)
             }
+            .accessibilityLabel("Open recipe directions")
+            .accessibilityHint("Double tap to open the recipe instructions in a browser")
+            .accessibilityAddTraits(.isButton)
 
         }
         .navigationBarBackButtonHidden(true)
@@ -152,12 +164,16 @@ struct RecipePersistentDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 BackButtonView()
+                    .accessibilityLabel("Back")
+                    .accessibilityHint("Double tap to go back")
+                    .accessibilityAddTraits(.isButton)
             }
             ToolbarItem(placement: .principal) {
                 Text("Reciplease")
                     .foregroundStyle(Color("WhiteFont"))
                     .font(.custom("Gutheng", size: 25))
                     .minimumScaleFactor(0.5)
+                    .accessibilityLabel("Reciplease - Recipe Details")
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -168,10 +184,15 @@ struct RecipePersistentDetailsView: View {
                         .frame(width: 24, height: 24)
                         .foregroundStyle(Color("GreenFavorite"))
                 }
+                .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
+                .accessibilityHint("Double tap to toggle favorite status")
+                .accessibilityAddTraits(.isButton)
             }
         }
         .sheet(isPresented: $showNavigator) {
             SafariWebView(url: URL(string: recipe.url!)!)
+                .accessibilityLabel("Webpage with recipe instructions")
+                .accessibilityHint("Swipe right to navigate in the webpage")
         }
     }
 }

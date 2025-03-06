@@ -21,6 +21,7 @@ struct RecipeListView: View {
                         .padding(.horizontal, 24)
                         .padding(.top, 24)
                         .minimumScaleFactor(0.5)
+                        .dynamicTypeSize(.xSmall ... .accessibility3)
                 } else {
                     ForEach(recipes, id: \.uri) { recipe in
                         NavigationLink {
@@ -28,6 +29,9 @@ struct RecipeListView: View {
                         } label: {
                             RecipeCardView(recipe: recipe)
                         }
+                        .accessibilityLabel("Open recipe: \(recipe.label)")
+                        .accessibilityHint("Double tap to view details of this recipe")
+                        .accessibilityAddTraits(.isButton)
                     }
                 }
             }
@@ -36,16 +40,22 @@ struct RecipeListView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     BackButtonView()
+                        .accessibilityLabel("Back")
+                        .accessibilityHint("Double tap to go back to the previous screen")
+                        .accessibilityAddTraits(.isButton)
                 }
                 ToolbarItem(placement: .principal) {
                     Text("Reciplease")
                         .foregroundStyle(Color("WhiteFont"))
                         .font(.custom("Gutheng", size: 25))
                         .minimumScaleFactor(0.5)
+                        .accessibilityLabel("Reciplease - Recipe List")
                 }
             }
         }
         .background(Color("Background"))
+        .accessibilityLabel("Recipe list screen")
+        .accessibilityHint("Displays recipes based on selected ingredients")
     }
 }
 

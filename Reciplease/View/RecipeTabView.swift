@@ -19,10 +19,14 @@ struct RecipeTabView: View {
                 NavigationStack {
                     RecipeSearchView()
                 }
+                .accessibilityLabel(Text("Search section"))
+                .accessibilityHint(Text("search screen"))
             } else if isFavoriteSelected {
                 NavigationStack {
                     FavoriteRecipeView()
                 }
+                .accessibilityLabel(Text("Favorite section"))
+                .accessibilityHint(Text("favorite screen"))
             }
             VStack(spacing: 0) {
                 Spacer()
@@ -46,6 +50,9 @@ struct RecipeTabView: View {
                             .font(.custom("Gutheng", size: 23))
                             .minimumScaleFactor(0.5)
                     }
+                    .accessibilityLabel("Search Tab")
+                    .accessibilityHint("Double tap to switch to the search tab")
+                    .accessibilityAddTraits(.isButton)
                     Spacer()
                     Divider()
                         .overlay {
@@ -56,7 +63,6 @@ struct RecipeTabView: View {
                         }
                     Spacer()
                     Button {
-                        print("Favorite")
                         isSearchSelected = false
                         isFavoriteSelected = true
                     } label: {
@@ -66,6 +72,9 @@ struct RecipeTabView: View {
                             .font(.custom("Gutheng", size: 23))
                             .minimumScaleFactor(0.5)
                     }
+                    .accessibilityLabel("Favorite Tab")
+                    .accessibilityHint("Double tap to switch to the favorite tab")
+                    .accessibilityAddTraits(.isButton)
                     Spacer()
                 }
                 .frame(height: 50)
@@ -73,9 +82,6 @@ struct RecipeTabView: View {
                 .background(Color("Background"))
             }
             .ignoresSafeArea(edges: .bottom)
-            .onAppear {
-                print("api key \(String(describing: apiKey))")
-            }
         }
         .navigationBarBackButtonHidden(true)
     }

@@ -100,6 +100,9 @@ struct RecipeDetailsView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 250)
                     }
+                    .accessibilityLabel("Image of the recipe \(recipesDetails.label)")
+                    .dynamicTypeSize(.xSmall ... .accessibility3)
+                    .accessibilityLabel("Recipe title: \(recipesDetails.label)")
                     .overlay {
                         VStack {
                             HStack {
@@ -110,6 +113,7 @@ struct RecipeDetailsView: View {
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
                                             .minimumScaleFactor(0.5)
+                                            .accessibilityLabel("Calories: \(Int(recipesDetails.calories ?? 0))")
                                         Image(systemName: "fork.knife.circle.fill")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -120,6 +124,7 @@ struct RecipeDetailsView: View {
                                             .foregroundStyle(Color("WhiteFont"))
                                             .font(.custom("PlusJakartaSans-Semibold", size: 15))
                                             .minimumScaleFactor(0.5)
+                                            .accessibilityLabel("Total cooking time: \(Int(recipesDetails.totalTime ?? 0)) minutes")
                                         Image(systemName: "stopwatch")
                                             .resizable()
                                             .frame(width: 14, height: 14)
@@ -141,6 +146,8 @@ struct RecipeDetailsView: View {
                                 .foregroundStyle(Color("WhiteFont"))
                                 .font(.custom("PlusJakartaSans-SemiBold", size: 28))
                                 .minimumScaleFactor(0.5)
+                                .dynamicTypeSize(.xSmall ... .accessibility3)
+                                .accessibilityLabel("Recipe title: \(recipesDetails.label)")
                         }
                     }
                     VStack(alignment: .leading, spacing: 10) {
@@ -149,6 +156,7 @@ struct RecipeDetailsView: View {
                             .font(.custom("Gutheng", size: 32))
                             .minimumScaleFactor(0.3)
                             .lineLimit(1)
+                            .accessibilityLabel("Ingredients list")
                         VStack(alignment: .leading, spacing: 0) {
                             ForEach(recipesDetails.ingredientLines, id: \.self) { ingredient in
                                 HStack(spacing: 0) {
@@ -157,12 +165,15 @@ struct RecipeDetailsView: View {
                                         .font(.custom("Gutheng", size: 16))
                                         .minimumScaleFactor(0.4)
                                         .lineLimit(4)
+                                        .dynamicTypeSize(.xSmall ... .accessibility3)
                                     Text("\(ingredient)")
                                         .foregroundStyle(Color("WhiteFont"))
                                         .font(.custom("Gutheng", size: 16))
                                         .minimumScaleFactor(0.4)
                                         .lineLimit(4)
+                                        .dynamicTypeSize(.xSmall ... .accessibility3)
                                 }
+                                .accessibilityLabel("Ingredient: \(ingredient)")
                             }
                         }
                     }
@@ -185,6 +196,9 @@ struct RecipeDetailsView: View {
                         .padding(.bottom, 75)
                         .minimumScaleFactor(0.5)
                 }
+                .accessibilityLabel("Open recipe directions")
+                .accessibilityHint("Double tap to open the recipe instructions in a browser")
+                .accessibilityAddTraits(.isButton)
             } else {
                 Text("Aucune direction disponible")
                     .foregroundStyle(Color.gray)
@@ -226,6 +240,9 @@ struct RecipeDetailsView: View {
                         .frame(width: 24, height: 24)
                         .foregroundStyle(Color("GreenFavorite"))
                 }
+                .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
+                .accessibilityHint("Double tap to toggle favorite status")
+                .accessibilityAddTraits(.isButton)
             }
         }
         .onAppear {
@@ -244,6 +261,8 @@ struct RecipeDetailsView: View {
         }
         .sheet(isPresented: $showNavigator) {
             SafariWebView(url: URL(string: recipesDetails.url)!)
+                .accessibilityLabel("Webpage with recipe instructions")
+                .accessibilityHint("Swipe right to navigate in the webpage")
         }
     }
 }
