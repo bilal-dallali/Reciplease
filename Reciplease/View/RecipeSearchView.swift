@@ -178,11 +178,11 @@ struct RecipeSearchView: View {
         .background(Color("Background"))
         .ignoresSafeArea(edges: .bottom)
         .onAppear {
-            if let apiKey = Bundle.main.infoDictionary?["APIKey"] as? String {
-                // Utilisez apiKey qui est maintenant un String non-optionnel
-                print("Clé API: \(apiKey)")
-                appKey = apiKey
-            }
+//            if let apiKey = Bundle.main.infoDictionary?["APIKey"] as? String {
+//                // Utilisez apiKey qui est maintenant un String non-optionnel
+//                print("Clé API: \(apiKey)")
+//                //appKey = apiKey
+//            }
         }
     }
 }

@@ -7,8 +7,13 @@
 
 import Foundation
 
-let appId = "2c51822c"
-var appKey = ""
+var appId: String {
+    return Bundle.main.infoDictionary?["API_ID"] as! String
+}
+
+var appKey: String {
+    return Bundle.main.infoDictionary?["API_KEY"] as! String
+}
 
 protocol ApiGetRequestProtocol {
     func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe], Error>) -> Void)
