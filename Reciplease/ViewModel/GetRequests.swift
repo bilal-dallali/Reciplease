@@ -8,8 +8,7 @@
 import Foundation
 
 let appId = "2c51822c"
-let appKey = ""
-let apiKey = ProcessInfo.processInfo.environment["API_KEY"]
+var appKey = ""
 
 protocol ApiGetRequestProtocol {
     func fetchRecipes(ingredients: [String], completion: @escaping (Result<[Recipe], Error>) -> Void)

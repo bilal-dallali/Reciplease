@@ -8,5 +8,7 @@
 		<string>Gutheng.ttf</string>
 		<string>PlusJakartaSans-Medium.ttf</string>
 	</array>
+	<key>APIKey</key>
+	<string>$(API_KEY)</string>
 </dict>
 </plist>
