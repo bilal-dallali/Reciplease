@@ -12,5 +12,10 @@
 	<string>$(API_KEY)</string>
 	<key>API_ID</key>
 	<string>$(API_ID)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
