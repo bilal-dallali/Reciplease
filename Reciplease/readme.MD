@@ -4,3 +4,4 @@
 - Add your key and your id like this
   - API_KEY=your_api_key
   - API_ID=your_api_id
+- Since the config.xconfig file is ignored by git it needs to be kept that way, never upload your api keys on a public repository
