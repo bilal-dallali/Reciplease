@@ -51,7 +51,6 @@ struct RecipeDetailsView: View {
 
         do {
             try viewContext.save()
-            print("✅ Recette ajoutée aux favoris !")
         } catch {
             print("❌ Erreur lors de l'ajout aux favoris :", error.localizedDescription)
         }
@@ -67,7 +66,6 @@ struct RecipeDetailsView: View {
                 viewContext.delete(object)
             }
             try viewContext.save()
-            print("✅ Recette supprimée des favoris !")
         } catch {
             print("❌ Erreur lors de la suppression :", error.localizedDescription)
         }

@@ -100,7 +100,6 @@ struct RecipeSearchView: View {
                             .accessibilityLabel(Text("Your ingredients title:"))
                         Spacer()
                         Button {
-                            print("clear")
                             ingredientsList.removeAll()
                         } label: {
                             Text("Clear")
@@ -143,11 +142,10 @@ struct RecipeSearchView: View {
                     apiGetManager.fetchRecipes(ingredients: ingredientsList) { result in
                         switch result {
                         case .success(let fetchedRecipes):
-                            print("success \(String(describing: apiGetManager.fetchRecipes))")
                             recipes = fetchedRecipes
                             redirectRecipeList = true
-                        case .failure(let error):
-                            print("Error: \(error.localizedDescription)")
+                        case .failure:
+                            break
                         }
                     }
                 } else {

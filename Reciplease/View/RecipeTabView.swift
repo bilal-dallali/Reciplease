@@ -40,7 +40,6 @@ struct RecipeTabView: View {
                 HStack {
                     Spacer()
                     Button {
-                        print("Search")
                         isSearchSelected = true
                         isFavoriteSelected = false
                     } label: {

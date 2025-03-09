@@ -32,8 +32,6 @@ class ApiGetRequest: ObservableObject, ApiGetRequestProtocol {
         let query = ingredients.joined(separator: ",")
         let url = "https://api.edamam.com/api/recipes/v2?type=public&q=\(query)&app_id=\(appId)&app_key=\(appKey)"
         
-        print("🔍 URL Request: \(url)")
-        
         networkService.request(url) { (result: Result<RecipeResponse, Error>) in
             switch result {
             case .success(let recipeResponse):
@@ -47,8 +45,6 @@ class ApiGetRequest: ObservableObject, ApiGetRequestProtocol {
     func fetchRecipeByURI(uri: String, completion: @escaping (Result<RecipeDetails, Error>) -> Void) {
         let uriComponents = uri.components(separatedBy: "#recipe_").last ?? uri
         let url = "https://api.edamam.com/api/recipes/v2/\(uriComponents)?type=public&app_id=\(appId)&app_key=\(appKey)"
-        print("uri \(uriComponents)")
-        print("🔍 URL Request: \(url)")
 
         networkService.request(url) { (result: Result<RecipeDetailsResponse, Error>) in
             switch result {

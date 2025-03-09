@@ -26,16 +26,11 @@ class ApiGetRequestTests: XCTestCase {
     
     // Tests fetch recipes success
     func testFetchRecipes_ShouldReturnMockData() {
-        if let path = Bundle(for: type(of: self)).url(forResource: "mockDataRequest", withExtension: "json") {
-            print("📂 Fichier mockDataRequest trouvé à : \(path)")
-        } else {
-            print("⚠️ Fichier mockDataRequest introuvable ! Vérifie qu'il est bien inclus dans le bundle de test.")
-        }
         //let originalURL = URL(string: "https://www.example.com/api/authentication?oauth_timestamp=151817037")!
         let originalURL = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&q=tomato&app_id=\(appId)&app_key=\(appKey)")!
         
         let mock = Mock(url: originalURL, ignoreQuery: true, contentType: .json, statusCode: 200, data: [
-            .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockDataRequest", withExtension: "json")!) // Data containing the JSON response
+            .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockRecipes", withExtension: "json")!) // Data containing the JSON response
         ])
         mock.register()
         
@@ -144,5 +139,4 @@ class ApiGetRequestTests: XCTestCase {
 
         waitForExpectations(timeout: 1, handler: nil)
     }
-
 }

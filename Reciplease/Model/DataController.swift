@@ -13,7 +13,6 @@ class DataController: ObservableObject {
     private let managedContext: NSManagedObjectContext
     
     init(container: NSPersistentContainer = NSPersistentContainer(name: "Reciplease")) {
-        //let container = NSPersistentContainer(name: "Reciplease")
         self.container = container
         
         container.loadPersistentStores { description, error in
@@ -24,14 +23,6 @@ class DataController: ObservableObject {
         managedContext = container.viewContext
         
     }
-    
-//    func isFavorite(_ recipe: Recipe) -> Bool {
-//        return false
-//    }
-//    
-//    func getFavorites() -> [Recipe] {
-//        return []
-//    }
     
     func getFavorites() -> [Recipe] {
         let fetchRequest: NSFetchRequest<RecipePersistent> = RecipePersistent.fetchRequest()
@@ -52,7 +43,6 @@ class DataController: ObservableObject {
                 )
             }
         } catch {
-            print("Erreur lors de la récupération des favoris : \(error.localizedDescription)")
             return []
         }
     }
@@ -67,7 +57,6 @@ class DataController: ObservableObject {
             // If count > 0 the recipe  is favorite
             return count > 0
         } catch {
-            print("Erreur lors de la vérification du favori : \(error.localizedDescription)")
             return false
         }
     }
@@ -86,7 +75,6 @@ class DataController: ObservableObject {
         do {
             try managedContext.save()
         } catch {
-            //XCTFail("Échec de l'ajout de la recette aux favoris: \(error.localizedDescription)")
             print("Échec de l'ajout de la recette aux favoris: \(error.localizedDescription)")
         }
     }
