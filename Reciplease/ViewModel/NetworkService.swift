@@ -21,7 +21,6 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func request<T: Decodable>(_ url: String, completion: @escaping (Result<T, Error>) -> Void) {
-        print("📡 Requête envoyée à : \(url)")
         sessionManager.request(url, headers: ["Edamam-Account-User": "Reciplease"])
             .validate()
             .responseDecodable(of: T.self) { response in

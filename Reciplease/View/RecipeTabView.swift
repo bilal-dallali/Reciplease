@@ -12,7 +12,6 @@ struct RecipeTabView: View {
     @State private var isSearchSelected: Bool = true
     @State private var isFavoriteSelected: Bool = false
     
-    
     var body: some View {
         ZStack {
             if isSearchSelected {

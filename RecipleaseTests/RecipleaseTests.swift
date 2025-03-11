@@ -10,8 +10,6 @@ import Alamofire
 import Mocker
 @testable import Reciplease
 
-import XCTest
-
 class ApiGetRequestTests: XCTestCase {
     var apiService: ApiGetRequest!
 
@@ -26,29 +24,38 @@ class ApiGetRequestTests: XCTestCase {
     
     // Tests fetch recipes success
     func testFetchRecipes_ShouldReturnMockData() {
-        //let originalURL = URL(string: "https://www.example.com/api/authentication?oauth_timestamp=151817037")!
+        // Define the API URL with authentication returns mocked data
         let originalURL = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&q=tomato&app_id=\(appId)&app_key=\(appKey)")!
         
+        // Create a mock response with a JSON file
         let mock = Mock(url: originalURL, ignoreQuery: true, contentType: .json, statusCode: 200, data: [
             .get : try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "mockRecipes", withExtension: "json")!) // Data containing the JSON response
         ])
+        // Register the mock so that requests use the fake response
         mock.register()
         
+        // Configure a mocked Alamofire session
         let configuration = URLSessionConfiguration.af.default
+        //Mocking request using Mocker
         configuration.protocolClasses = [MockingURLProtocol.self]
         let sessionManager = Alamofire.Session(configuration: configuration)
         let service = NetworkService(sessionManager: sessionManager)
+        // Create an expectation
         let expectation = self.expectation(description: "Fetch Recipes")
         let apiServiceTwo = ApiGetRequest(networkService: service)
         
+        // Perform the api mock request
         apiServiceTwo.fetchRecipes(ingredients: ["chocolate"]) { result in
             switch result {
             case .success(let recipes):
+                // Verify that 20 recipes are returned
                 XCTAssertEqual(recipes.count, 20)
+                // Check if the first recipe has the correct labelk
                 XCTAssertEqual(recipes.first?.label, "Serious Chocolate: Easy Chocolate Pie Crust Recipe")
             case .failure:
                 XCTFail("Expected success but got failure")
             }
+            
             expectation.fulfill()
         }
 
@@ -59,6 +66,7 @@ class ApiGetRequestTests: XCTestCase {
     func testFetchRecipes_ShouldReturnError() {
         let mockURL = URL(string: "https://api.edamam.com/api/recipes/v2?type=public&q=tomato&app_id=\(appId)&app_key=\(appKey)")!
 
+        // Simulate an API failure with HTTP status code 500
         let mock = Mock(url: mockURL, ignoreQuery: true, contentType: .json, statusCode: 500, data: [.get : Data()])
         mock.register()
 
@@ -72,8 +80,10 @@ class ApiGetRequestTests: XCTestCase {
         apiService.fetchRecipes(ingredients: ["tomato", "cheese"]) { result in
             switch result {
             case .success:
+                // The test fails if there is no error
                 XCTFail("Expected failure but got success")
             case .failure:
+                // The test pass if an error is returned
                 XCTAssert(true)
             }
             expectation.fulfill()
